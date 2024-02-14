@@ -1,23 +1,32 @@
-<div class="Window" >
+<div class="Window">
     <div class="task" *ngFor="let items of tasks">
         <div>
-        <div class="title">
-        <div><h2>Meditate</h2></div>
-        <h2 ><div class="circle"> <div class="inner-circle"></div> </div></h2>
-        </div>
-        <div class="description">language-learning website and mobile</div>
-        <div class="tande">
-        <div class="timer"></div>
-        <div class="edit"></div>
-        </div>
-        <div class="tagname"> Tag name </div>
-        <div class="asigne">
-            <div class="profile_picture"></div>
-            <div class="Name">Jayaram</div>
-        </div>
+            <div class="title">
+                <div>
+                    <h2>Meditate</h2>
+                </div>
+                <h2>
+                    <div class="circle">
+                        <div class="inner-circle"></div>
+                    </div>
+                </h2>
+            </div>
+            <div class="description">language-learning website and mobile</div>
+            <div class="tande">
+                <div class="timer"></div>
+                <div class="edit"></div>
+            </div>
+            <div class="tagname"> Tag name </div>
+            <div class="asigne">
+                <div class="profile_picture"></div>
+                <div class="Name">Jayaram</div>
+            </div>
         </div>
     </div>
-    <div>   
-        <div (click)="emit(evnt)" class="add_task" #evnt ><div  class="add_task_button"><img class="add_icon" src="../../assets/add_992651.png" alt="add"></div></div>
+    <div>
+        <div class="add_task" #evnt>
+            <div (click)="emit(evnt)" class="add_task_button"><img class="add_icon" src="../../assets/add_992651.png"
+                    alt="add"></div>
+        </div>
     </div>
 </div>
