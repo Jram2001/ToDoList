@@ -31,5 +31,6 @@ export class AppComponent {
   Visibility:boolean = false
   ngOnInit(){
     this.SharedService.emittedValue.subscribe(inpu => {console.log(inpu);this.Visibility = !this.Visibility})
+    this.SharedService.GetBackendData().subscribe((x:any) => console.log(x));
   }
 } 
