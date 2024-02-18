@@ -11,9 +11,12 @@ import { SharedService } from '../Sevices/shared.service';
 export class HomeComponent {
   emittedValue:boolean = false 
   constructor(private SharedService:SharedService){}
-  tasks:any = [1,2,3,4];
+  tasks:any = [];
+  ngOnInit(){
+    this.SharedService.TaskDta.subscribe( data => {this.tasks = data})
+   
+  }
   emit(Event:any){
-    console.log('hello')
     this.SharedService.emitValue(Event)
   }
 }

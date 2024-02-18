@@ -3,7 +3,7 @@
         <div class="title" >
         <h3 class="Heading"> ADD A NEW TASK </h3>
         </div>
-        <div (keyup.enter)="log()" class="form_Container">
+        <div class="form_Container">
             <form [formGroup]="ToDoList">
             <input type="text" placeholder="Task Name" class="input_box" id="taskname" name="taskname" formControlName="TaskName">
             <div @fadeIn *ngIf="ToDoList.get('TaskName')?.invalid && ToDoList.get('TaskName')?.touched" class="error">

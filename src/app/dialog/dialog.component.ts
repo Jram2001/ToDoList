@@ -23,14 +23,15 @@ import { animate, style, transition, trigger } from '@angular/animations';
     ])
   ]})
 export class DialogComponent {
-
+  constructor(private SharedService:SharedService){}
+  tasks:any = [];
+  ngOnInit(){
+    this.SharedService.TaskDta.subscribe( data => this.tasks = data)
+  }
   ToDoList = new FormGroup({
     TaskName : new FormControl('',Validators.required),
     InputBox : new FormControl('',Validators.required),
     AsigneName : new FormControl('',Validators.required),
     Description : new FormControl('',Validators.required)
   })
-log(){
-  console.log(this.ToDoList)
-}
 }

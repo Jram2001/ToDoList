@@ -1,9 +1,9 @@
 <div class="Window">
-    <div class="task" *ngFor="let items of tasks">
+    <div class="task" *ngFor="let items of tasks let i=index">
         <div>
             <div class="title">
                 <div>
-                    <h2>Meditate</h2>
+                    <h2>{{items.TaskName}}</h2>
                 </div>
                 <h2>
                     <div class="circle">
