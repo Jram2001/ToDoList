@@ -7,19 +7,19 @@
                 </div>
                 <h2>
                     <div class="circle">
-                        <div class="inner-circle"></div>
+                        <div class="inner-circle" [style.background-color]="myColor()" ></div>
                     </div>
                 </h2>
             </div>
-            <div class="description">language-learning website and mobile</div>
+            <div class="description">{{items.Descriptions}}</div>
             <div class="tande">
-                <div class="timer"></div>
+                <div class="timer">hii</div>
                 <div class="edit"></div>
             </div>
-            <div class="tagname"> Tag name </div>
+            <div class="tagname" style > {{myColor()}} </div>
             <div class="asigne">
                 <div class="profile_picture"></div>
-                <div class="Name">Jayaram</div>
+                <div class="Name">{{items.AsigneeName}}</div>
             </div>
         </div>
     </div>
