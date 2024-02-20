@@ -1,39 +1,38 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedService } from '../Sevices/shared.service';
+import { DatePipe } from '@angular/common';
+import { AppComponent } from '../app.component';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,DatePipe,AppComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
   emittedValue:boolean = false 
-  constructor(private SharedService:SharedService){}
+  constructor(private SharedService:SharedService , private DatePipe:DatePipe ){}
   tasks:any = [];
   Todaysdate = new Date();
   taskDate! :Date;
+  TickerValue:any;
   ngOnInit(){
     this.SharedService.TaskDta.subscribe( data => {this.tasks = data;})
   }
   emit(Event:any){
     this.SharedService.emitValue(Event)
   }
-  myColor(){
-    this.taskDate = new Date(this.tasks[0].CreatedOn);
-    let DiffrenceInMilliseconds = this.Todaysdate.getTime() - this.taskDate.getTime();
-    let DiffrenceInDays = this.Todaysdate.getDate() - this.taskDate.getDate();
-    if(DiffrenceInDays < 1 || this.tasks[0].Repetable != 0){
-        if(DiffrenceInMilliseconds / (1000 * 60 * 60 ) < 24){
-        return '#3ffc72'
-        }
-        else{
-          return '#ff2929'
-        }
+  myColor(index:any){
+    this.taskDate = new Date(this.tasks[index].CreatedOn);
+    let DiffrenceInHours =  this.taskDate.getHours() - this.Todaysdate.getHours();
+    let DiffrenceInDays = DiffrenceInHours /  (86400000);
+    this.TickerValue = this.DatePipe.transform(new Date(this.taskDate.getTime() - this.Todaysdate.getTime()), 'HH:mm:ss') || new Date("00:00:00");
+    console.log(this.TickerValue)
+    if((DiffrenceInDays < 1 || this.tasks[index].Repetable == 1) && DiffrenceInHours > 0 ){
+        return '#a3ff82'
     }
     else{
-      console.log(Math.floor(DiffrenceInMilliseconds / (1000 * 60 * 60 * 24)),DiffrenceInMilliseconds / (1000 * 60 * 60 ) < 24)
       return '#ff2929'
     }
   }

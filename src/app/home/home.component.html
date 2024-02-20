@@ -1,22 +1,22 @@
 <div class="Window">
     <div class="task" *ngFor="let items of tasks let i=index">
         <div>
-            <div class="title">
+            <div class="title"> 
                 <div>
                     <h2>{{items.TaskName}}</h2>
                 </div>
                 <h2>
                     <div class="circle">
-                        <div class="inner-circle" [style.background-color]="myColor()" ></div>
+                        <div class="inner-circle" [style.background-color]="myColor(i)" ></div>
                     </div>
                 </h2>
             </div>
             <div class="description">{{items.Descriptions}}</div>
             <div class="tande">
-                <div class="timer">hii</div>
-                <div class="edit"></div>
+                <div class="timer"></div>
+                <div class="edit"><img src="../../assets/Edit.png" alt=""></div>
             </div>
-            <div class="tagname" style > {{myColor()}} </div>
+            <div class="tagname" style >  </div>
             <div class="asigne">
                 <div class="profile_picture"></div>
                 <div class="Name">{{items.AsigneeName}}</div>

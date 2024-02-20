@@ -6,8 +6,7 @@ import { DialogComponent } from './dialog/dialog.component';
 import { SharedService } from './Sevices/shared.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { error } from 'node:console';
-import { HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -28,7 +27,7 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class AppComponent {
-  constructor(private SharedService:SharedService,private http:HttpClient){}
+  constructor(private SharedService:SharedService){}
   title = 'ToDoList';
   Visibility:boolean = true
   localdata:any ;
@@ -37,4 +36,5 @@ export class AppComponent {
     this.SharedService.emittedValue.subscribe(inpu => this.Visibility = !this.Visibility)
     this.SharedService.GetBackendData();
   }
+
 } 
