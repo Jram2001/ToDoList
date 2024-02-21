@@ -1,11 +1,20 @@
 import { Component, NgModule, input } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { DialogComponent } from './dialog/dialog.component';
 import { SharedService } from './Sevices/shared.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { trigger, transition, style, animate } from '@angular/animations';
+
+
+@NgModule({
+        declarations: [],
+        imports:[DatePipe],
+        providers: [DatePipe],
+})
+export class DatePickerModule {
+}
 
 @Component({
   selector: 'app-root',

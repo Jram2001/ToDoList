@@ -1,8 +1,19 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Pipe } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedService } from '../Sevices/shared.service';
 import { DatePipe } from '@angular/common';
 import { AppComponent } from '../app.component';
+import { pipe } from 'rxjs';
+
+@Pipe({
+  name: 'DatePipe'
+})
+export class datePipe {
+  transform(value: string): string {
+    return value.toUpperCase();
+  }
+}
+
 @Component({
   selector: 'app-home',
   standalone: true,

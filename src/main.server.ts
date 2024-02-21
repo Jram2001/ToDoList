@@ -4,7 +4,7 @@ import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/
 import { importProvidersFrom } from '@angular/core';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePipe } from '@angular/common';
+import { HomeComponent } from './app/home/home.component';
 
-const bootstrap = () => bootstrapApplication(AppComponent, { providers: [importProvidersFrom(),importProvidersFrom(DatePipe),provideHttpClient(withFetch()),importProvidersFrom(NoopAnimationsModule)] });
+const bootstrap = () => bootstrapApplication(AppComponent, { providers: [importProvidersFrom(),provideHttpClient(withFetch()),importProvidersFrom(NoopAnimationsModule)] });
 export default bootstrap;
-
