@@ -8,18 +8,10 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { trigger, transition, style, animate } from '@angular/animations';
 
 
-@NgModule({
-        declarations: [],
-        imports:[DatePipe],
-        providers: [DatePipe],
-})
-export class DatePickerModule {
-}
-
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,HomeComponent,CommonModule,DialogComponent,ReactiveFormsModule,FormsModule],
+  imports: [RouterOutlet,HomeComponent,CommonModule,DialogComponent,ReactiveFormsModule,FormsModule,DatePipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
     animations: [
@@ -34,7 +26,6 @@ export class DatePickerModule {
     ])
   ]
 })
-
 export class AppComponent {
   constructor(private SharedService:SharedService){}
   title = 'ToDoList';
