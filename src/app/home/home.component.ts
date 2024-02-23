@@ -25,15 +25,12 @@ export class HomeComponent {
   TickerValue:any;
   Color:any;
   TimerArray:any = [];
+  TagData:any =[];
+  index:number = 0;
+
   ngOnInit(){
-    this.SharedService.TaskDta.subscribe( data => this.tasks = data)
-  }
-  ngAfterViewInit(){
-        this.tasks.map( (data:any) => {
-          this.taskDate = new Date(data.CreatedOn);
-          this.TimerArray.push(this.datepipe.transform(new Date(this.taskDate.getTime() - this.Todaysdate.getTime()), 'HH:mm:ss') || new Date("00:00:00"))
-    })
-    console.log(this.TickerValue)
+    this.SharedService.TaskDta.subscribe( data => this.tasks = data);
+    this.SharedService.TagData.subscribe( data => this.TagData = data);
   }
   emit(Event:any){
     this.SharedService.emitValue(Event)
@@ -55,5 +52,16 @@ export class HomeComponent {
           return this.datepipe.transform(new Date(this.taskDate.getTime() - this.Todaysdate.getTime()), 'HH:mm:ss') || new Date("00:00:00");
       }, 1000);
   }
+
+  ReturnTagValue(){
+    this.index++;
+    console.log(this.index)
+    return this.TagData.filter((x:any) => x.TaskId == this.index );
+  }
+
+  ngOnDestroy(){
+    this.SharedService.TaskDta.unsubscribe();
+  }
+
 }
 

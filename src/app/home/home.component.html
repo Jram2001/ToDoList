@@ -7,16 +7,18 @@
                 </div>
                 <h2>
                     <div class="circle">
-                        <div class="inner-circle" [style.background-color]="myColor(i)" ></div>
+                        <div class="inner-circle" [style.background-color]="myColor(i)[0]" ></div>
                     </div>
                 </h2>
             </div>
             <div class="description">{{items.Descriptions}}</div>
             <div class="tande">
                 <div class="timer">h</div>
-                <div class="edit"><img src="../../assets/Edit.png" alt=""></div>
+                <div class="edit"><img src="../../assets/Edit.png" alt=""   ></div>
             </div>
-            <div class="tagname" style >  </div>
+            <div class="tagnamecover">
+            <div class="tagname" *ngFor="let datas of ReturnTagValue() let j = index" >{{datas[j].Tag}}</div>
+            </div>
             <div class="asigne">
                 <div class="profile_picture"></div>
                 <div class="Name">{{items.AsigneeName}}</div>

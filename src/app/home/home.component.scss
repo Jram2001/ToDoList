@@ -120,3 +120,8 @@ h2{
 .add_icon{
     transition: 0.2s;
 }
+.tagnamecover{
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+}
