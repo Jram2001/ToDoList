@@ -1,80 +1,106 @@
-h2{
+h2 {
     margin: 0px 0 15px 0;
 }
-.add_task , .task{
-        display: flex;
-        align-items: center;
-        font-family: Montserrat;
-        width: 400px;
-        height: 270px;
-        border-radius: 30px;
-        margin: 15px;
+
+.add_task,
+.task {
+    display: flex;
+    align-items: center;
+    font-family: Montserrat;
+    width: 400px;
+    height: 270px;
+    border-radius: 30px;
+    margin: 15px;
 }
 
-.add_task{
+
+.add_task {
     display: flex;
     justify-content: center;
 }
-.task{
+
+.task {
     background-color: white;
     box-shadow: 0px 0px 15px -2px rgba(0, 0, 0, 0.73)
 }
-.Window{
-        justify-content: center;
+
+.Window {
+    justify-content: center;
 }
-.Window , .title{
+
+.icon,
+.Window,
+.title {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     align-items: center;
 }
-.title{
+
+.title {
     margin: 0 30px 0 25px;
 }
 
-.circle,.timer,.edit,.tagname,.add_task_button{
-        display: flex;
-        justify-content: center;
-        align-items: center;
+.circle,
+.timer,
+.edit,
+.tagname,
+.add_task_button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.circle{
+
+.icon {
+    font-size: 20px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 1px;
+}
+
+.circle {
     margin: 0 0 0 15px;
     width: 29px;
     height: 29px;
     border-radius: 50%;
     border: 2px solid black;
 }
-.inner-circle{
+
+.inner-circle {
     height: 25px;
     border-radius: 50%;
     width: 25px;
 }
-.description{
+
+.description {
     font-size: 16px;
     margin: 0 0 0 25px;
 }
-.timer{
+
+.timer {
     margin: 15px 0 0 25px;
     width: 100px;
     height: 25px;
     border-radius: 5px;
     background-color: #dcdddd;
 }
-.tande{
+
+.tande {
     display: flex;
     flex-direction: row;
 }
-.edit img{
-    width: 60%;
-}
-.edit{
+
+.edit {
+    font-size: 6px;
     margin: 15px 0 0 15px;
     width: 25px;
     height: 25px;
     border-radius: 5px;
     background-color: #dcdddd;
 }
-.tagname{
+
+.tagname {
     margin: 15px 0 0 25px;
     color: white;
     font-family: Montserrat;
@@ -85,42 +111,52 @@ h2{
     font-size: 16px;
     font-weight: bold;
 }
-.profile_picture{
+
+.profile_picture {
     width: 50px;
     height: 50px;
     border-radius: 50%;
     background-image: url(../../assets/1.png);
     background-size: cover;
 }
-.Name{
+
+.Name {
     margin: 0 0 0 15px;
     font-size: 16px;
     font-weight: bold;
 }
-.asigne{
+
+.asigne {
     display: flex;
     flex-direction: row;
     align-items: center;
     margin: 15px 0 0 25px;
 }
-.add_task_button{
+
+.add_task_button {
     width: 50px;
     height: 50px;
     border-radius: 5px;
     box-shadow: 0px 0px 15px -2px rgba(0, 0, 0, 0.73);
 }
-.add_icon{
+
+.add_icon {
     width: 30px;
 }
 
-.add_task_button:active .add_icon{
+.icon:active .icon {
+    width: 15px;
+}
+
+.add_task_button:active .add_icon {
     width: 25px;
 }
 
-.add_icon{
+.add_icon {
     transition: 0.2s;
 }
-.tagnamecover{
+
+.tagnamecover {
     overflow: hidden;
     display: flex;
     flex-direction: row;

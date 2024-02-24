@@ -67,8 +67,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "move-safe:build",
-            "proxyConfig": "src/proxy.conf.json"
+            "buildTarget": "move-safe:build"
           },
           "configurations": {
             "production": {
