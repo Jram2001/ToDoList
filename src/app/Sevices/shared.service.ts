@@ -15,10 +15,11 @@ export class SharedService {
     this.emittedValue.next(Event)
   }
   GetBackendData() {
+    console.log('clo')
     this.http.get('http://localhost:3000/todo').subscribe((Data: any) => { this.TaskDta.next(Data.taskDeatils); this.TagData.next(Data.TagDetail) });
-    console.log(this.TagData);
   }
   DeleteData(index: number) {
-    this.http.get(`http://localhost:3000/delete/${index}`).subscribe(x => console.log(x))
+    console.log(index)
+    this.http.get(`http://localhost:3000/delete/${index}`).subscribe(x => this.GetBackendData())
   }
 }

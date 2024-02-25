@@ -1,5 +1,6 @@
 <div *ngIf="tasks.length > 0" class="Window">
-    <div class="task" *ngFor=" let items of tasks let i=index ">
+    <div  *ngFor=" let items of tasks let i=index ">
+        <div class="task" *ngIf="items.deleted != 1">
         <div>
             <div class="title">
                 <div>
@@ -16,8 +17,7 @@
                 <div class="timer"></div>
                 <div class="edit"><mat-icon class="icon">edit</mat-icon>
                 </div>
-                <div class="edit" (click)="deleteData(i+1)" style="background-color: rgb(247, 72, 72);"><mat-icon
-                        (click)="deleteData(i)" class="icon">delete</mat-icon>
+                <div class="edit" (click)="deleteData(i+1)" style="background-color: rgb(247, 72, 72);"><mat-icon class="icon">delete</mat-icon>
                 </div>
             </div>
             <div class="tagnamecover">
@@ -27,6 +27,7 @@
             <div class="asigne">
                 <div class="profile_picture"></div>
                 <div class="Name">{{items.AsigneeName}}</div>
+            </div>
             </div>
         </div>
     </div>

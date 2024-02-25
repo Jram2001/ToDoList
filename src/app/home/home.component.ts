@@ -28,8 +28,7 @@ export class HomeComponent {
   TagData: any = [];
   Arrayoftagdata: any = [];
   index: number = 0;
-
-  ngOnInit() {
+  ngAfterViewInit(){
     this.SharedService.TaskDta.subscribe(data => this.tasks = data);
     this.SharedService.TagData.subscribe(data => this.TagData = data);
   }
