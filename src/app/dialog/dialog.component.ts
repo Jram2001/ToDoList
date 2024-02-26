@@ -26,7 +26,7 @@ export class DialogComponent {
   constructor(private SharedService:SharedService){}
   tasks:any = [];
   ngOnInit(){
-    this.SharedService.TaskDta.subscribe( data => this.tasks = data)
+    this.SharedService.GetBackendData().subscribe( data => this.tasks = data)
   }
   ToDoList = new FormGroup({
     TaskName : new FormControl('',Validators.required),

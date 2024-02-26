@@ -18,25 +18,28 @@ export class HomeComponent {
   constructor(private SharedService: SharedService) {
     this.datepipe = new DatePipe('en-US');
   }
-  emittedValue: boolean = false
+  emittedValue: boolean = false;
   tasks: any = [];
   Todaysdate = new Date();
   taskDate!: Date;
-  TickerValue: any;
   Color: any;
-  TimerArray: any = [];
   TagData: any = [];
   Arrayoftagdata: any = [];
   index: number = 0;
-  ngAfterViewInit(){
-    this.SharedService.TaskDta.subscribe(data => this.tasks = data);
-    this.SharedService.TagData.subscribe(data => this.TagData = data);
+  dataLoaded: boolean = false;
+  ngOnInit() {
+    this.SharedService.GetBackendData().subscribe((Data: any) => {
+      this.tasks = Data.taskDeatils;
+      this.TagData = Data.TagDetail;
+      this.dataLoaded = true;
+    });
   }
   emit(Event: any) {
     this.SharedService.emitValue(Event)
   }
   myColor(index: any) {
     this.taskDate = new Date(this.tasks[index].CreatedOn);
+    console.log(this.tasks[0].AsigneeName, index, this.tasks, this.TagData)
     let DiffrenceInHours = this.taskDate.getHours() - this.Todaysdate.getHours();
     let DiffrenceInDays = DiffrenceInHours / (86400000);
     if ((DiffrenceInDays < 1 || this.tasks[index].Repetable == 1) && DiffrenceInHours > 0) {
@@ -54,7 +57,7 @@ export class HomeComponent {
   }
 
   deleteData(index: number) {
-    this.SharedService.DeleteData(index)
+    this.SharedService.DeleteData(index).subscribe(x => this.SharedService.GetBackendData());
   }
 
   ReturnTagValue() {
@@ -67,9 +70,6 @@ export class HomeComponent {
     else return 0
   }
 
-  ngOnDestroy() {
-    this.SharedService.TaskDta.unsubscribe();
-  }
 
 }
 

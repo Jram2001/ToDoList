@@ -1,33 +1,36 @@
-<div *ngIf="tasks.length > 0" class="Window">
-    <div  *ngFor=" let items of tasks let i=index ">
+<div *ngIf="tasks.length > 0 && dataLoaded" class="Window">
+    <div *ngFor=" let items of tasks let i=index ">
+
         <div class="task" *ngIf="items.deleted != 1">
-        <div>
-            <div class="title">
-                <div>
-                    <h2>{{items.TaskName}}</h2>
-                </div>
-                <h2>
-                    <div class="circle">
-                        <div class="inner-circle" [style.background-color]="myColor(i)[0]"></div>
+            <div>
+                <div class="title">
+                    <div>
+                        <h2>{{items.TaskName}}</h2>
                     </div>
-                </h2>
-            </div>
-            <div class="description">{{items.Descriptions}}</div>
-            <div class="tande">
-                <div class="timer"></div>
-                <div class="edit"><mat-icon class="icon">edit</mat-icon>
+                    <h2>
+                        <div class="circle">
+                            <div class="inner-circle" [style.background-color]="myColor(i)[0]"></div>
+                        </div>
+                    </h2>
                 </div>
-                <div class="edit" (click)="deleteData(i+1)" style="background-color: rgb(247, 72, 72);"><mat-icon class="icon">delete</mat-icon>
+                <div class="description">{{items.Descriptions}}</div>
+                <div class="tande">
+                    <div class="timer"></div>
+                    <div class="edit"><mat-icon class="icon">edit</mat-icon>
+                    </div>
+                    <div class="edit" (click)="deleteData(i+1)" style="background-color: rgb(247, 72, 72);"><mat-icon
+                            class="icon">delete</mat-icon>
+                    </div>
                 </div>
-            </div>
-            <div class="tagnamecover">
-                <div class="tagname" *ngFor=" let datas of ReturnTagValue();let j = index ">{{Arrayoftagdata[i][j].Tag}}
+                <div class="tagnamecover">
+                    <div class="tagname" *ngFor=" let datas of ReturnTagValue();let j = index ">
+                        {{Arrayoftagdata[i][j].Tag}}
+                    </div>
                 </div>
-            </div>
-            <div class="asigne">
-                <div class="profile_picture"></div>
-                <div class="Name">{{items.AsigneeName}}</div>
-            </div>
+                <div class="asigne">
+                    <div class="profile_picture"></div>
+                    <div class="Name">{{items.AsigneeName}}</div>
+                </div>
             </div>
         </div>
     </div>
