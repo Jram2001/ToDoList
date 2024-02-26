@@ -1,6 +1,5 @@
 <div *ngIf="tasks.length > 0 && dataLoaded" class="Window">
     <div *ngFor=" let items of tasks let i=index ">
-
         <div class="task" *ngIf="items.deleted != 1">
             <div>
                 <div class="title">
@@ -23,8 +22,8 @@
                     </div>
                 </div>
                 <div class="tagnamecover">
-                    <div class="tagname" *ngFor=" let datas of ReturnTagValue();let j = index ">
-                        {{Arrayoftagdata[i][j].Tag}}
+                    <div class="tagname" *ngFor="let datas of items.Tags.split(',');let j = index ">
+                        {{datas}}
                     </div>
                 </div>
                 <div class="asigne">

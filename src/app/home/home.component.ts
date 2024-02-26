@@ -27,16 +27,26 @@ export class HomeComponent {
   Arrayoftagdata: any = [];
   index: number = 0;
   dataLoaded: boolean = false;
-  ngOnInit() {
-    this.SharedService.GetBackendData().subscribe((Data: any) => {
-      this.tasks = Data.taskDeatils;
-      this.TagData = Data.TagDetail;
-      this.dataLoaded = true;
-    });
-  }
+
   emit(Event: any) {
     this.SharedService.emitValue(Event)
   }
+
+  ngOnInit() {
+    this.getData();
+  }
+
+  getData(){
+    this.SharedService.GetBackendData().subscribe((Data: any) => {
+      this.tasks = Data;
+      this.dataLoaded = true;
+    });
+  }
+
+  deleteData(index: number) {
+    this.SharedService.DeleteData(index).subscribe((x:any) =>{this.getData()});
+  }
+
   myColor(index: any) {
     this.taskDate = new Date(this.tasks[index].CreatedOn);
     console.log(this.tasks[0].AsigneeName, index, this.tasks, this.TagData)
@@ -49,25 +59,12 @@ export class HomeComponent {
       return ['#ff2929']
     }
   }
+
   updateTimer(index: any) {
     setInterval(() => {
       this.taskDate = new Date(this.tasks[index].CreatedOn);
       return this.datepipe.transform(new Date(this.taskDate.getTime() - this.Todaysdate.getTime()), 'HH:mm:ss') || new Date("00:00:00");
     }, 1000);
-  }
-
-  deleteData(index: number) {
-    this.SharedService.DeleteData(index).subscribe(x => this.SharedService.GetBackendData());
-  }
-
-  ReturnTagValue() {
-    this.index++;
-    if (this.index <= this.tasks.length) {
-      let temp = this.TagData.filter((x: any) => x.TaskId == this.index);
-      this.Arrayoftagdata.push(temp);
-      return temp;
-    }
-    else return 0
   }
 
 

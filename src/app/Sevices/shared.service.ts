@@ -13,7 +13,6 @@ export class SharedService {
     this.emittedValue.next(Event)
   }
   GetBackendData() {
-    console.log('hlo')
     return this.http.get('http://localhost:3000/todo');
   }
   DeleteData(index: number) {
