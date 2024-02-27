@@ -10,16 +10,22 @@
                 Please enter valid details
             </div>
             <div class="MultipleActionButtons">
-                <div id="timer" class="input_box" >TIMER</div>
+                <div id="timer" class="input_box" (click)="addItem()" >TIMER</div>
                 <div id="edit" class="input_box"><img src="../home/../../assets/pen_1250615 1.png" alt=""></div>
                 <div  id="Repetable">
                     <mat-slide-toggle color="warn"></mat-slide-toggle>
                 </div>
             </div>
+            <form [formGroup]="tasks">
+                <div formArrayName="getitems()">
+                    <div *ngFor=" let items of tagform.get('credentials')?.value;let i = index" [formGroupName]="i">
             <input type="text" placeholder="Tag Name" class="input_box" id="tag" name="taskname" formControlName="InputBox">
                     <div @fadeIn *ngIf="ToDoList.get('InputBox')?.invalid && ToDoList.get('InputBox')?.touched" class="error">
                         Please enter valid details
                     </div>
+                    </div>
+                </div>
+            </form>
             <input type="text" placeholder="Asigne Name" class="input_box" id="asignee" name="taskname" formControlName="AsigneName">
                     <div @fadeIn *ngIf="ToDoList.get('AsigneName')?.invalid && ToDoList.get('AsigneName')?.touched" class="error">
                         Please enter valid details

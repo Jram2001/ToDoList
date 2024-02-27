@@ -3,8 +3,10 @@ import { CommonModule } from '@angular/common';
 import { SharedService } from '../Sevices/shared.service';
 import { DatePipe } from '@angular/common';
 import { AppComponent } from '../app.component';
-import { interval, pipe } from 'rxjs';
+import { interval, pipe, retry } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
+import { FormBuilder } from '@angular/forms';
+import { FormArray } from '@angular/forms';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -18,6 +20,7 @@ export class HomeComponent {
   constructor(private SharedService: SharedService) {
     this.datepipe = new DatePipe('en-US');
   }
+
   emittedValue: boolean = false;
   tasks: any = [];
   Todaysdate = new Date();
@@ -49,7 +52,6 @@ export class HomeComponent {
 
   myColor(index: any) {
     this.taskDate = new Date(this.tasks[index].CreatedOn);
-    console.log(this.tasks[0].AsigneeName, index, this.tasks, this.TagData)
     let DiffrenceInHours = this.taskDate.getHours() - this.Todaysdate.getHours();
     let DiffrenceInDays = DiffrenceInHours / (86400000);
     if ((DiffrenceInDays < 1 || this.tasks[index].Repetable == 1) && DiffrenceInHours > 0) {
