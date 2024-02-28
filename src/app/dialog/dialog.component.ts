@@ -5,10 +5,12 @@ import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angula
 import { FormsModule,FormControl,FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { MatIconModule } from '@angular/material/icon';
+
 @Component({
   selector: 'app-dialog',
   standalone: true,
-  imports: [MatSlideToggleModule,ReactiveFormsModule,FormsModule,CommonModule],
+  imports: [MatSlideToggleModule,MatIconModule,ReactiveFormsModule,FormsModule,CommonModule],
   templateUrl: './dialog.component.html',
   styleUrl: './dialog.component.scss',
   animations: [
@@ -23,7 +25,12 @@ import { animate, style, transition, trigger } from '@angular/animations';
     ])
   ]})
 export class DialogComponent {
-  constructor(private SharedService:SharedService,private formbuilder:FormBuilder){ }
+  constructor(private SharedService:SharedService,private formbuilder:FormBuilder){
+        this.tagform = this.formbuilder.group({
+      published: true,
+      credentials: this.formbuilder.array([]),
+    });
+   }
     ToDoList = new FormGroup({
     TaskName : new FormControl('',Validators.required),
     InputBox : new FormControl('',Validators.required),
@@ -33,15 +40,10 @@ export class DialogComponent {
   tagform! : FormGroup;
   tasks:any = [];
   ngOnInit(){
-    this.tagform = this.formbuilder.group({
-      published: true,
-      credentials: this.formbuilder.array([]),
-    });
     this.SharedService.GetBackendData().subscribe( data => this.tasks = data);
     this.addItem();
   }
   
-
   addItem(){
       const creds = this.tagform.get('credentials') as FormArray;
       creds.push(
@@ -49,6 +51,9 @@ export class DialogComponent {
           TagName : ['']
         })
       )
+  }
+  Submit(a:any,b:any){
+    console.log(a,b)
   }
 
 }
