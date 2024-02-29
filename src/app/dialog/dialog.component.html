@@ -3,41 +3,52 @@
 
         <div class="form_Container ">
             <form [formGroup]="ToDoList" class="Heading">
-            <input type="text" placeholder="Task Name" class="input_box" id="taskname" name="taskname" formControlName="TaskName">
-            <div @fadeIn *ngIf="ToDoList.get('TaskName')?.invalid && ToDoList.get('TaskName')?.touched" class="error">
-                Please enter valid details
-            </div>
-            <div class="MultipleActionButtons">
-                <div id="timer" class="input_box" (click)="addItem()">TIMER</div>
-                <div id="edit" class="input_box"><img src="../home/../../assets/pen_1250615 1.png" alt=""></div>
-                <div  id="Repetable">
-                    <mat-slide-toggle color="warn"></mat-slide-toggle>
-                </div>
-            </div>  
-            <form [formGroup]="tagform">
-                    <div formArrayName="credentials" *ngFor=" let items of tagform.get('credentials')?.value;let i = index">
-                    <div  [formGroupName]="i">
-                    <input *ngIf="i > 0" type="text" placeholder="Tag Name" class="input_box" id="tag" name="taskname" formControlName="TagName">
-                    <div *ngIf="i == 0" class="MultipleActionButtons" id="secondForm">
-                        <input  type="text" placeholder="Tag Name" class="input_box" id="tag_First" name="taskname" formControlName="TagName">
-                        <div id="edit" class="input_box"  (click)="addItem()" ><mat-icon>add_circle</mat-icon></div>
-                    </div>
-                    <div @fadeIn *ngIf="ToDoList.get('InputBox')?.invalid && ToDoList.get('InputBox')?.touched" class="error">
-                        Please enter valid detailss
-                    </div>
-                    </div>
-                    </div>
-            </form>
-            <input type="text" placeholder="Asigne Name" class="input_box" id="asignee" name="taskname" formControlName="AsigneName">
-                    <div @fadeIn *ngIf="ToDoList.get('AsigneName')?.invalid && ToDoList.get('AsigneName')?.touched" class="error">
-                        Please enter valid details
-                    </div>
-            <input type="text" placeholder="Description" class="description" id="description" name="taskname" formControlName="Description">
-                <div @fadeIn *ngIf="ToDoList.get('Description')?.invalid && ToDoList.get('Description')?.touched" class="error">
+                <input type="text" placeholder="Task Name" class="input_box" id="taskname" name="taskname"
+                    formControlName="TaskName">
+                <div @fadeIn *ngIf="ToDoList.get('TaskName')?.invalid && ToDoList.get('TaskName')?.touched"
+                    class="error">
                     Please enter valid details
                 </div>
-            <button class="SubmitButton" (click)="Submit(ToDoList,tagform)">Submit</button>
-        </form>
+                <div class="MultipleActionButtons">
+                    <div id="timer" class="input_box" (click)="addItem()">TIMER</div>
+                    <div id="edit" class="input_box"><img src="../home/../../assets/pen_1250615 1.png" alt=""></div>
+                    <div id="Repetable">
+                        <mat-slide-toggle formControlName="Repetable" color="warn"></mat-slide-toggle>
+                    </div>
+                </div>
+                <form [formGroup]="tagform">
+                    <div formArrayName="credentials"
+                        *ngFor=" let items of tagform.get('credentials')?.value;let i = index">
+                        <div [formGroupName]="i">
+                            <input *ngIf="i > 0" type="text" placeholder="Tag Name" class="input_box" id="tag"
+                                name="taskname" formControlName="Tag">
+                            <div *ngIf="i == 0" class="MultipleActionButtons" id="secondForm">
+                                <input type="text" placeholder="Tag Name" class="input_box" id="tag_First"
+                                    name="taskname" formControlName="Tag">
+                                <div id="edit" class="input_box" (click)="addItem()"><mat-icon>add_circle</mat-icon>
+                                </div>
+                            </div>
+                            <div @fadeIn *ngIf="ToDoList.get('InputBox')?.invalid && ToDoList.get('InputBox')?.touched"
+                                class="error">
+                                Please enter valid detailss
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <input type="text" placeholder="Asigne Name" class="input_box" id="asignee" name="taskname"
+                    formControlName="AsigneName">
+                <div @fadeIn *ngIf="ToDoList.get('AsigneName')?.invalid && ToDoList.get('AsigneName')?.touched"
+                    class="error">
+                    Please enter valid details
+                </div>
+                <input type="text" placeholder="Description" class="description" id="description" name="taskname"
+                    formControlName="Description">
+                <div @fadeIn *ngIf="ToDoList.get('Description')?.invalid && ToDoList.get('Description')?.touched"
+                    class="error">
+                    Please enter valid details
+                </div>
+                <button class="SubmitButton" (click)="Submit(ToDoList,tagform)">Submit</button>
+            </form>
         </div>
     </div>
 </div>

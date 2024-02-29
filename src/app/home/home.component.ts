@@ -37,6 +37,10 @@ export class HomeComponent {
 
   ngOnInit() {
     this.getData();
+      this.SharedService.triggerMethodSubject.subscribe(() => {
+      console.log('hello')
+      this.getData();
+    });
   }
 
   getData(){
