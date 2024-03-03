@@ -15,7 +15,7 @@
                 <div class="description">{{items.Descriptions}}</div>
                 <div class="tande">
                     <div class="timer"></div>
-                    <div class="edit"><mat-icon class="icon">edit</mat-icon>
+                    <div class="edit"><mat-icon (click)="editemiter(i)" class="icon">edit</mat-icon>
                     </div>
                     <div class="edit" (click)="deleteData(i+1)" style="background-color: rgb(247, 72, 72);"><mat-icon
                             class="icon">delete</mat-icon>

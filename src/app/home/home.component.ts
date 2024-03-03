@@ -35,10 +35,13 @@ export class HomeComponent {
     this.SharedService.emitValue(Event)
   }
 
+  editemiter(Index:any){
+    this.SharedService.emitValue(Index)
+  }
+
   ngOnInit() {
     this.getData();
-      this.SharedService.triggerMethodSubject.subscribe(() => {
-      console.log('hello')
+      this.SharedService.triggerMethodSubject.subscribe((x:any) => {
       this.getData();
     });
   }

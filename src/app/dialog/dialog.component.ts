@@ -45,7 +45,13 @@ export class DialogComponent {
     id: new FormControl(this.tasks.length + 1)
   })
 
-  ngOnInit() {
+  ngOnInit() {    
+    this.SharedService.triggerMethodSubject.subscribe((x:any) => {
+      console.log(typeof(x) == 'number',typeof(x))
+      if(typeof(x) == 'number'){
+      this.SetValue(x);
+      }
+    });
     this.SharedService.GetBackendData().subscribe(data => { this.tasks = data; this.ToDoList.get('id')?.setValue(this.tasks.length + 1) });
     this.addItem();
   }
@@ -58,10 +64,19 @@ export class DialogComponent {
       })
     )
   }
-
+  SetValue(index:any){
+      this.ToDoList.get('id')?.setValue(this.tasks[index].id);
+      this.ToDoList.get('TaskName')?.setValue(this.tasks[index].TaskName);
+      this.ToDoList.get('InputBox')?.setValue(this.tasks[index].InputBox);
+      this.ToDoList.get('AsigneName')?.setValue(this.tasks[index].AsigneeName);
+      this.ToDoList.get('Description')?.setValue(this.tasks[index].Descriptions);
+      this.ToDoList.get('Repetable')?.setValue(this.tasks[index].Repetable);
+      this.ToDoList.get('CreatedOn')?.setValue(this.tasks[index].CreatedOn);
+    console.log('form',this.ToDoList.value,this.tasks[index])
+    }
   Submit(a: any, b: any) {
     console.log(this.ToDoList.get('Repetable'))
-    this.SharedService.CreateData(a.value, b.value.credentials).subscribe(x => {console.log('lols');this.SharedService.triggerMethod()});
+    this.SharedService.CreateData(a.value, b.value.credentials).subscribe(x => {console.log('h');this.SharedService.triggerMethod()});
   }
 
 }

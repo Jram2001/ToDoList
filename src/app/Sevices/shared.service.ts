@@ -12,6 +12,7 @@ export class SharedService {
     public triggerMethodSubject = new Subject<void>();
 
   emitValue(Event: any) {
+    this.triggerMethodSubject.next(Event);
     this.emittedValue.next(Event)
   }
   GetBackendData() {
@@ -24,8 +25,6 @@ export class SharedService {
     return this.http.post('http://localhost:3000/create',[a,b]);
   }
   triggerMethod() {
-    console.log('kk')
     this.triggerMethodSubject.next();
   }
-  
 }
