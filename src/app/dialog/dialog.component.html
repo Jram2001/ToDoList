@@ -1,6 +1,5 @@
 <div class="Wholecontainer">
-    <div (click)="SetValue(2)" class="dialog_container">
-
+    <div class="dialog_container">
         <div class="form_Container ">
             <form [formGroup]="ToDoList" class="Heading">
                 <input type="text" placeholder="Task Name" class="input_box" id="taskname" name="taskname"
@@ -9,6 +8,7 @@
                     class="error">
                     Please enter valid details
                 </div>
+
                 <div class="MultipleActionButtons">
                     <div id="timer" class="input_box" (click)="addItem()">TIMER</div>
                     <div id="edit" class="input_box"><img src="../home/../../assets/pen_1250615 1.png" alt=""></div>
@@ -16,6 +16,7 @@
                         <mat-slide-toggle formControlName="Repetable" color="warn"></mat-slide-toggle>
                     </div>
                 </div>
+    
                 <form [formGroup]="tagform">
                     <div formArrayName="credentials"
                         *ngFor=" let items of tagform.get('credentials')?.value;let i = index">

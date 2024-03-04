@@ -5,7 +5,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { DialogComponent } from './dialog/dialog.component';
 import { SharedService } from './Sevices/shared.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { trigger, transition, style, animate } from '@angular/animations';
+import { trigger, transition, style, animate, state } from '@angular/animations';
 
 
 @Component({
@@ -16,12 +16,14 @@ import { trigger, transition, style, animate } from '@angular/animations';
   styleUrl: './app.component.scss',
     animations: [
     trigger('fadeIn', [
-      transition(':enter', [
-        style({ transform: 'translate(-50%, 100%)',left: '50%',top: '50%' }),
-        animate('500ms ease-out', style({ transform: 'translate(-50%, -50%)',left: '50%',top: '50%' }))
-      ]),
-      transition(':leave', [
-        animate('500ms ease-in', style({ transform: 'translate(-50%, 200%)',left: '50%',top: '50%' }))
+      state('hidden',style({
+        transform: 'translate(-50%, 200%)',left: '50%',top: '50%' 
+      })),
+      state('visible',style({
+        transform: 'translate(-50%, -50%)',left: '50%',top: '50%' 
+      })),
+      transition('hidden <=> visible',[
+         animate('500ms ease-in')
       ])
     ])
   ]
@@ -31,10 +33,15 @@ export class AppComponent {
   title = 'ToDoList';
   Visibility:boolean = true
   localdata:any ;
+  animationData:any = 'hidden';
+
 
   ngOnInit(){    
-    this.SharedService.emittedValue.subscribe(inpu => this.Visibility = !this.Visibility)
+    this.SharedService.emittedValue.subscribe(inpu => { this.Visibility = !this.Visibility;this.animationData = this.Visibility == true ? 'visible' : 'hidden';
+console.log(this.animationData,this.Visibility)})
     this.SharedService.GetBackendData();
+    // this.SharedService.emitValue(1);
+    // this.SharedService.emitValue(0);
   }
 
 } 

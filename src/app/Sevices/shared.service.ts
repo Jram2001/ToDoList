@@ -13,18 +13,23 @@ export class SharedService {
 
   emitValue(Event: any) {
     this.triggerMethodSubject.next(Event);
-    this.emittedValue.next(Event)
+    this.emittedValue.next(Event);
   }
+  
   GetBackendData() {
     return this.http.get('http://localhost:3000/todo');
   }
+
   DeleteData(index: number) {
     return this.http.get(`http://localhost:3000/delete/${index}`);
   }
+
   CreateData(a:any,b:any){
     return this.http.post('http://localhost:3000/create',[a,b]);
   }
+
   triggerMethod() {
     this.triggerMethodSubject.next();
-  }
+  } 
+
 }

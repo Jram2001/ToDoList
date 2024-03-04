@@ -6,6 +6,8 @@ import { FormsModule, FormControl, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { MatIconModule } from '@angular/material/icon';
+import { setTimeout } from 'timers/promises';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-dialog',
@@ -26,13 +28,14 @@ import { MatIconModule } from '@angular/material/icon';
   ]
 })
 export class DialogComponent {
-  constructor(private SharedService: SharedService, private formbuilder: FormBuilder) {
+  constructor(private SharedService: SharedService, private formbuilder: FormBuilder, private cdr  : ChangeDetectorRef) {
     this.tagform = this.formbuilder.group({
       published: true,
       credentials: this.formbuilder.array([]),
     });
   }
   tagform!: FormGroup;
+  valueStatus : boolean = false;
   tasks: any = [];
   taskId!: number;
   ToDoList = new FormGroup({
@@ -41,19 +44,19 @@ export class DialogComponent {
     AsigneName: new FormControl('', Validators.required),
     Description: new FormControl('', Validators.required),
     Repetable: new FormControl(true),
-    CreatedOn: new FormControl((new Date().toISOString().replace('T', ' ').slice(0, -5))),
+    CreatedOn: new FormControl((new Date().toISOString().replace('T' , ' ').slice(0, -5))),
     id: new FormControl(this.tasks.length + 1)
   })
 
-  ngOnInit() {    
+  ngAfterViewInit(){
+    this.SharedService.GetBackendData().subscribe(data => { this.tasks = data; this.ToDoList.get('id')?.setValue(this.tasks.length + 1) });
     this.SharedService.triggerMethodSubject.subscribe((x:any) => {
-      console.log(typeof(x) == 'number',typeof(x))
+      this.valueStatus = true;
       if(typeof(x) == 'number'){
       this.SetValue(x);
       }
+      this.cdr.detectChanges();
     });
-    this.SharedService.GetBackendData().subscribe(data => { this.tasks = data; this.ToDoList.get('id')?.setValue(this.tasks.length + 1) });
-    this.addItem();
   }
 
   addItem() {
@@ -72,11 +75,10 @@ export class DialogComponent {
       this.ToDoList.get('Description')?.setValue(this.tasks[index].Descriptions);
       this.ToDoList.get('Repetable')?.setValue(this.tasks[index].Repetable);
       this.ToDoList.get('CreatedOn')?.setValue(this.tasks[index].CreatedOn);
-    console.log('form',this.ToDoList.value,this.tasks[index])
+      console.log(this.ToDoList)
     }
   Submit(a: any, b: any) {
     console.log(this.ToDoList.get('Repetable'))
-    this.SharedService.CreateData(a.value, b.value.credentials).subscribe(x => {console.log('h');this.SharedService.triggerMethod()});
   }
 
 }

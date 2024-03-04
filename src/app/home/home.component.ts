@@ -36,6 +36,7 @@ export class HomeComponent {
   }
 
   editemiter(Index:any){
+    console.log('hello')
     this.SharedService.emitValue(Index)
   }
 
