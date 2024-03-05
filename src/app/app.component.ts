@@ -37,11 +37,8 @@ export class AppComponent {
 
 
   ngOnInit(){    
-    this.SharedService.emittedValue.subscribe(inpu => { this.Visibility = !this.Visibility;this.animationData = this.Visibility == true ? 'visible' : 'hidden';
-console.log(this.animationData,this.Visibility)})
+    this.SharedService.emittedValue.subscribe(inpu => { this.Visibility = !this.Visibility;this.animationData = this.Visibility == true ? 'visible' : 'hidden'})
     this.SharedService.GetBackendData();
-    // this.SharedService.emitValue(1);
-    // this.SharedService.emitValue(0);
   }
 
 } 

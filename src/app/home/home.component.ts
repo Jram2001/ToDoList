@@ -20,7 +20,6 @@ export class HomeComponent {
   constructor(private SharedService: SharedService) {
     this.datepipe = new DatePipe('en-US');
   }
-
   emittedValue: boolean = false;
   tasks: any = [];
   Todaysdate = new Date();

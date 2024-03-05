@@ -46,28 +46,31 @@ export class DialogComponent {
     Repetable: new FormControl(true),
     CreatedOn: new FormControl((new Date().toISOString().replace('T' , ' ').slice(0, -5))),
     id: new FormControl(this.tasks.length + 1)
-  })
-
-  ngAfterViewInit(){
+  });
+  index!:number;
+  isEditValue:boolean = false;
+  ngOnInit(){
     this.SharedService.GetBackendData().subscribe(data => { this.tasks = data; this.ToDoList.get('id')?.setValue(this.tasks.length + 1) });
     this.SharedService.triggerMethodSubject.subscribe((x:any) => {
       this.valueStatus = true;
       if(typeof(x) == 'number'){
-      this.SetValue(x);
+        this.SetValue(x);
       }
-      this.cdr.detectChanges();
+      else{
+        this.addItem();
+      }
     });
   }
 
   addItem() {
-    const creds = this.tagform.get('credentials') as FormArray;
-    creds.push(
-      this.formbuilder.group({
-        Tag: ['']
-      })
-    )
+    console.log(this.tasks)
+    let creds:any = []; 
+    creds = this.tagform.get('credentials') as FormArray;
   }
+
   SetValue(index:any){
+      this.index = index;
+      let creds:any = []; 
       this.ToDoList.get('id')?.setValue(this.tasks[index].id);
       this.ToDoList.get('TaskName')?.setValue(this.tasks[index].TaskName);
       this.ToDoList.get('InputBox')?.setValue(this.tasks[index].InputBox);
@@ -75,10 +78,21 @@ export class DialogComponent {
       this.ToDoList.get('Description')?.setValue(this.tasks[index].Descriptions);
       this.ToDoList.get('Repetable')?.setValue(this.tasks[index].Repetable);
       this.ToDoList.get('CreatedOn')?.setValue(this.tasks[index].CreatedOn);
-      console.log(this.ToDoList)
+      this.isEditValue = true;
+      this.tagform = this.formbuilder.group({
+        published: true,
+        credentials: this.formbuilder.array([]),
+      });
+      creds = this.tagform.get('credentials') as FormArray;
+      this.tasks[index].Tags.split(',').map( (data:any) => {
+        creds.push(
+          this.formbuilder.group({
+        Tag: [`${data}`] }))
+      })
+
     }
   Submit(a: any, b: any) {
-    console.log(this.ToDoList.get('Repetable'))
+     this.SharedService.CreateData(a,b).subscribe()
   }
 
 }

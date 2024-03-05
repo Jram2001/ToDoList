@@ -28,8 +28,11 @@ export class SharedService {
     return this.http.post('http://localhost:3000/create',[a,b]);
   }
 
+  EditData(a:any,b:any,c:any){
+    return this.http.post('http://localhost:3000/update',[a,b,c]);
+  }
+
   triggerMethod() {
     this.triggerMethodSubject.next();
   } 
-
 }
