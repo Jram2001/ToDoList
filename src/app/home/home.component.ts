@@ -20,7 +20,7 @@ export class HomeComponent {
   constructor(private SharedService: SharedService) {
     this.datepipe = new DatePipe('en-US');
   }
-  emittedValue: boolean = false;
+  emittedValue: boolean = true;
   tasks: any = [];
   Todaysdate = new Date();
   taskDate!: Date;
@@ -31,22 +31,22 @@ export class HomeComponent {
   dataLoaded: boolean = false;
 
   emit(Event: any) {
-    this.SharedService.emitValue(Event)
+    this.SharedService.emitValue([-1, this.emittedValue])
+    this.emittedValue = !this.emittedValue;
   }
 
-  editemiter(Index:any){
-    console.log('hello')
-    this.SharedService.emitValue(Index)
+  editemiter(Index: any) {
+    this.SharedService.emitValue([Index, true])
+    this.emittedValue = false;
   }
-
-  ngOnInit() {
-    this.getData();
-      this.SharedService.triggerMethodSubject.subscribe((x:any) => {
+  ngAfterViewInit() {
+    this.SharedService.triggerMethodSubject.subscribe((x: any) => {
       this.getData();
     });
+    this.getData();
   }
 
-  getData(){
+  getData() {
     this.SharedService.GetBackendData().subscribe((Data: any) => {
       this.tasks = Data;
       this.dataLoaded = true;
@@ -54,7 +54,7 @@ export class HomeComponent {
   }
 
   deleteData(index: number) {
-    this.SharedService.DeleteData(index).subscribe((x:any) =>{this.getData()});
+    this.SharedService.DeleteData(index).subscribe((x: any) => { this.getData() });
   }
 
   myColor(index: any) {

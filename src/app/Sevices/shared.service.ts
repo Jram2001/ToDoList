@@ -8,14 +8,14 @@ import { HttpClient } from '@angular/common/http';
 
 export class SharedService {
   constructor(private http: HttpClient) { }
-  emittedValue: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-    public triggerMethodSubject = new Subject<void>();
+  emittedValue: BehaviorSubject<any> = new BehaviorSubject<any>(true);
+  public triggerMethodSubject = new Subject<void>();
 
   emitValue(Event: any) {
-    this.triggerMethodSubject.next(Event);
+    this.triggerMethodSubject.next(Event[0]);
     this.emittedValue.next(Event);
   }
-  
+
   GetBackendData() {
     return this.http.get('http://localhost:3000/todo');
   }
@@ -24,15 +24,17 @@ export class SharedService {
     return this.http.get(`http://localhost:3000/delete/${index}`);
   }
 
-  CreateData(a:any,b:any){
-    return this.http.post('http://localhost:3000/create',[a,b]);
+  CreateData(a: any, b: any) {
+    console.log('hello', a, b)
+    return this.http.post('http://localhost:3000/create', [a, b]);
   }
 
-  EditData(a:any,b:any,c:any){
-    return this.http.post('http://localhost:3000/update',[a,b,c]);
+  EditData(a: any, b: any, c: any) {
+    console.log('hellol',a,b,c)
+    return this.http.post('http://localhost:3000/update', [a, b, c]);
   }
 
   triggerMethod() {
     this.triggerMethodSubject.next();
-  } 
+  }
 }

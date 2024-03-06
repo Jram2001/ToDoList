@@ -21,7 +21,7 @@
                             class="icon">delete</mat-icon>
                     </div>
                 </div>
-                <div class="tagnamecover">
+                <div class="tagnamecover" *ngIf="items.Tags.split(',').length > 0">
                     <div class="tagname" *ngFor="let datas of items.Tags.split(',');let j = index ">
                         {{datas}}
                     </div>
@@ -35,8 +35,8 @@
     </div>
     <div>
         <div class="add_task" #evnt>
-            <div class="add_task_button"><img (click)="emit(evnt)" class="add_icon" src="../../assets/add_992651.png"
-                    alt="add"></div>
+            <div class="add_task_button"><img (click)="emit(emittedValue)" class="add_icon"
+                    src="../../assets/add_992651.png" alt="add"></div>
         </div>
     </div>
 </div>

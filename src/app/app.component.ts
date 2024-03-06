@@ -11,33 +11,33 @@ import { trigger, transition, style, animate, state } from '@angular/animations'
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,HomeComponent,CommonModule,DialogComponent,ReactiveFormsModule,FormsModule,DatePipe],
+  imports: [RouterOutlet, HomeComponent, CommonModule, DialogComponent, ReactiveFormsModule, FormsModule, DatePipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-    animations: [
+  animations: [
     trigger('fadeIn', [
-      state('hidden',style({
-        transform: 'translate(-50%, 200%)',left: '50%',top: '50%' 
+      state('hidden', style({
+        transform: 'translate(-50%, 200%)', left: '50%', top: '50%'
       })),
-      state('visible',style({
-        transform: 'translate(-50%, -50%)',left: '50%',top: '50%' 
+      state('visible', style({
+        transform: 'translate(-50%, -50%)', left: '50%', top: '50%'
       })),
-      transition('hidden <=> visible',[
-         animate('500ms ease-in')
+      transition('hidden <=> visible', [
+        animate('500ms ease-in')
       ])
     ])
   ]
 })
 export class AppComponent {
-  constructor(private SharedService:SharedService){}
+  constructor(private SharedService: SharedService) { }
   title = 'ToDoList';
-  Visibility:boolean = true
-  localdata:any ;
-  animationData:any = 'hidden';
+  Visibility: boolean = false;
+  localdata: any;
+  animationData: any = 'hidden';
 
 
-  ngOnInit(){    
-    this.SharedService.emittedValue.subscribe(inpu => { this.Visibility = !this.Visibility;this.animationData = this.Visibility == true ? 'visible' : 'hidden'})
+  ngAfterViewInit() {
+    this.SharedService.emittedValue.subscribe(inpu => { this.Visibility = inpu[1]; this.animationData = this.Visibility == true ? 'visible' : 'hidden' })
     this.SharedService.GetBackendData();
   }
 
