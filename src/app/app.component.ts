@@ -6,12 +6,12 @@ import { DialogComponent } from './dialog/dialog.component';
 import { SharedService } from './Sevices/shared.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { trigger, transition, style, animate, state } from '@angular/animations';
-
+import { SigninComponent } from './signin/signin.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HomeComponent, CommonModule, DialogComponent, ReactiveFormsModule, FormsModule, DatePipe],
+  imports: [SigninComponent,RouterOutlet, HomeComponent, CommonModule, DialogComponent, ReactiveFormsModule, FormsModule, DatePipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   animations: [
@@ -28,13 +28,13 @@ import { trigger, transition, style, animate, state } from '@angular/animations'
     ])
   ]
 })
+
 export class AppComponent {
   constructor(private SharedService: SharedService) { }
   title = 'ToDoList';
   Visibility: boolean = false;
   localdata: any;
   animationData: any = 'hidden';
-
 
   ngAfterViewInit() {
     this.SharedService.emittedValue.subscribe(inpu => { this.Visibility = inpu[1]; this.animationData = this.Visibility == true ? 'visible' : 'hidden' })
