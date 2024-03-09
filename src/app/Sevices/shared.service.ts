@@ -30,7 +30,6 @@ export class SharedService {
   }
 
   EditData(a: any, b: any, c: any) {
-    console.log('hellol',a,b,c)
     return this.http.post('http://localhost:3000/update', [a, b, c]);
   }
 
