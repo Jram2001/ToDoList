@@ -13,7 +13,6 @@ export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideClientHydration(), provideAnimations(), provideHttpClient(withFetch()),   
      provideRouter([
       { path: '', redirectTo: '/login', pathMatch:'full' },
-      { path: '**', redirectTo: '/login', pathMatch:'full' },
       { path : 'home' , loadComponent: () => import('./home/home.component').then(Component => Component.HomeComponent) },
       { path : 'login',component : SigninComponent }
     ])]

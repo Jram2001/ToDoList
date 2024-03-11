@@ -36,4 +36,15 @@ export class SharedService {
   triggerMethod() {
     this.triggerMethodSubject.next();
   }
+
+  login(data:any){
+    console.log(data)
+    return this.http.post('http://localhost:3000/validate',[data])
+  }
+
+  CreateUser(data:any){
+        console.log(data)
+
+    return this.http.post('http://localhost:3000/CreateMyUser',[data])
+  }
 }
