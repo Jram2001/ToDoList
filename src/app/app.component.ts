@@ -7,7 +7,7 @@ import { SharedService } from './Sevices/shared.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { trigger, transition, style, animate, state } from '@angular/animations';
 import { SigninComponent } from './signin/signin.component';
-
+import { auth } from './app.AuthGuard';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -39,6 +39,7 @@ export class AppComponent {
   ngAfterViewInit() {
     this.SharedService.emittedValue.subscribe(inpu => { this.Visibility = inpu[1]; this.animationData = this.Visibility == true ? 'visible' : 'hidden' })
     this.SharedService.GetBackendData();
+
   }
 
 } 

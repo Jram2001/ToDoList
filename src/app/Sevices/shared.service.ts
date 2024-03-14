@@ -39,12 +39,21 @@ export class SharedService {
 
   login(data:any){
     console.log(data)
-    return this.http.post('http://localhost:3000/validate',[data])
+    return this.http.post('http://localhost:3000/validate',data)
   }
 
   CreateUser(data:any){
         console.log(data)
 
-    return this.http.post('http://localhost:3000/CreateMyUser',[data])
+    return this.http.post('http://localhost:3000/CreateMyUser',data)
+  }
+
+  ValidateUser(){
+    if(sessionStorage.getItem('Id')){
+      return true
+    }
+    else{
+      return false
+    }
   }
 }
