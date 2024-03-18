@@ -40,6 +40,7 @@ export class HomeComponent {
     this.emittedValue = false;
   }
   ngAfterViewInit() {
+    this.SharedService.ValidateUser();
     this.SharedService.triggerMethodSubject.subscribe((x: any) => {
       this.getData();
     });

@@ -32,14 +32,13 @@ import { auth } from './app.AuthGuard';
 export class AppComponent {
   constructor(private SharedService: SharedService) { }
   title = 'ToDoList';
-  Visibility: boolean = false;
+  Visibility: boolean = true;
   localdata: any;
   animationData: any = 'hidden';
 
   ngAfterViewInit() {
     this.SharedService.emittedValue.subscribe(inpu => { this.Visibility = inpu[1]; this.animationData = this.Visibility == true ? 'visible' : 'hidden' })
     this.SharedService.GetBackendData();
-
   }
 
 } 

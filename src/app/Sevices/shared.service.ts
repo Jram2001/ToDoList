@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -38,22 +38,22 @@ export class SharedService {
   }
 
   login(data:any){
-    console.log(data)
     return this.http.post('http://localhost:3000/validate',data)
   }
 
   CreateUser(data:any){
-        console.log(data)
-
     return this.http.post('http://localhost:3000/CreateMyUser',data)
   }
 
+  VerifyToken( data:any ){
+    return this.http.post('http://localhost:3000/ValidateToken',{},{headers : data}).subscribe(x => {return x})
+  }
+
   ValidateUser(){
-    if(sessionStorage.getItem('Id')){
-      return true
-    }
-    else{
-      return false
-    }
+    const token  =  localStorage.getItem('Token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+      return this.VerifyToken(headers);
   }
 }
