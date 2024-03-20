@@ -1,0 +1,60 @@
+.Signin-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.SigninForm{
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 550px;
+    height: auto;
+    background-color: white;
+    box-shadow: 0px 0px 15px -2px rgba(0, 0, 0, 0.73);
+}
+form{
+    margin: 50px 0 ;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.error{
+    margin: 0 0 20px 0;
+    color: red;
+}   
+
+.input_box{
+    width: calc(90% - 20px);
+    height: 50px;
+    margin: 0 0 20px 0;
+    box-shadow: 0px 0px 10px -2px #CECECE;
+    border: 1px solid rgb(219, 219, 219);
+    padding: 0 0 0 20px;
+    border-radius: 5px;
+}
+
+.SubmitButton{
+    width: 40%;
+    height: 50px;
+    background-color: #D28F65;
+    border-radius: 5px;
+    border: none;
+    margin: 20px 5% 0 0;
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+}
+.btns{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+}

@@ -10,8 +10,9 @@ export class SharedService {
   constructor(private http: HttpClient) { }
   emittedValue: BehaviorSubject<any> = new BehaviorSubject<any>(true);
   public triggerMethodSubject = new Subject<void>();
+  currentuser : BehaviorSubject<any> = new BehaviorSubject<any>('');
 
-  emitValue(Event: any) {
+  emitValue(Event: any) { 
     this.triggerMethodSubject.next(Event[0]);
     this.emittedValue.next(Event);
   }
@@ -46,7 +47,7 @@ export class SharedService {
   }
 
   VerifyToken( data:any ){
-    return this.http.post('http://localhost:3000/ValidateToken',{},{headers : data}).subscribe(x => {return x})
+    return this.http.post('http://localhost:3000/ValidateToken',{"user" : localStorage.getItem('user')},{headers : data})
   }
 
   ValidateUser(){
@@ -54,6 +55,7 @@ export class SharedService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
+    this.VerifyToken(headers).subscribe(x => console.log(x))
       return this.VerifyToken(headers);
   }
 }

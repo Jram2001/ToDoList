@@ -1,0 +1,18 @@
+<div class="Signin-container" >
+    <div class="SigninForm">
+        <form  [formGroup]="UserData">
+        <input type="text" placeholder="User Name" class="input_box" id="UserName" formControlName="UserName">
+        <div  *ngIf="UserData.get('UserName')?.invalid && UserData.get('UserName')?.touched" class="error">
+            Please enter valid detailss !
+        </div>
+        <input type="text" placeholder="Password" class="input_box" id="Password" formControlName="password">
+        <div  *ngIf="UserData.get('Password')?.invalid && UserData.get('Password')?.touched" class="error">
+            Please enter valid detailss !
+        </div>
+        <div class="btns">
+            <button class="SubmitButton" (click)="Login()">Login</button>
+            <button class="SubmitButton" (click)="createAccount()"> SignUp </button>
+        </div>
+        </form>
+    </div>
+</div>
