@@ -18,7 +18,7 @@ export class SharedService {
   }
 
   GetBackendData() {
-    return this.http.get('http://localhost:3000/todo');
+    return this.http.post('http://localhost:3000/todo',{"userId" : 26} );
   }
 
   DeleteData(index: number) {
@@ -47,6 +47,7 @@ export class SharedService {
   }
 
   VerifyToken( data:any ){
+    console.log(localStorage.getItem('user'))
     return this.http.post('http://localhost:3000/ValidateToken',{"user" : localStorage.getItem('user')},{headers : data})
   }
 

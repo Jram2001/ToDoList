@@ -10,7 +10,6 @@ import { auth } from './app.AuthGuard';
 
 export const appConfig: ApplicationConfig = {
   providers: [ provideClientHydration(), provideAnimations(), provideHttpClient(withFetch()),  
-     
      provideRouter([
       { path: '', redirectTo: '/login', pathMatch:'full' },
       { path : 'home'  , loadComponent: () => import('./home/home.component').then(Component => Component.HomeComponent) , canActivate : [auth]},

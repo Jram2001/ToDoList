@@ -107,7 +107,9 @@ export class DialogComponent {
   }
   }
   Submit(a: any, b: any) {
-    console.log(this.tasks,this.tagform,b)
-    this.isNewData == true ? this.SharedService.CreateData(a, b).subscribe(() =>  this.SharedService.triggerMethod()) : this.SharedService.EditData(a, b, this.tasks[this.index].TagIds.split(',')).subscribe(() => this.SharedService.triggerMethod())
+      console.log(this.ToDoList,this.ToDoList.valid,this.ToDoList,'lllllll')
+  if(this.ToDoList.valid == true){
+  this.isNewData == true ? this.SharedService.CreateData(a, b).subscribe(() =>  this.SharedService.triggerMethod()) : this.SharedService.EditData(a, b, this.tasks[this.index].TagIds.split(',')).subscribe(() => this.SharedService.triggerMethod())
   }
+}
 }

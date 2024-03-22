@@ -20,7 +20,7 @@
       password: new FormControl('', Validators.required)
     })  
     Login(){
-      this.sharedService.login(this.UserData.value).subscribe( (x:any) => {localStorage.setItem('Token' , x?.accessToken) ; localStorage.setItem('user' , x?.user) ;this.router.navigate(['/home'])});
+      this.sharedService.login(this.UserData.value).subscribe( (x:any) => {console.log(x.userId);localStorage.setItem('Token' , x?.accessToken); localStorage.setItem('user' , x?.user) ;localStorage.setItem('UserID' , x?.userID) ;this.router.navigate(['/home'])});
     }
     createAccount(){
         this.sharedService.CreateUser(this.UserData.value).subscribe( (x:any) => console.log(x));
