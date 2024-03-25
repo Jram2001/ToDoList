@@ -16,7 +16,6 @@
                         <mat-slide-toggle formControlName="Repetable" color="warn"></mat-slide-toggle>
                     </div>
                 </div>
-
                 <form [formGroup]="tagform">
                     <div formArrayName="credentials"
                         *ngFor=" let items of tagform.get('credentials')?.value;let i = index">
@@ -43,8 +42,8 @@
                     Please enter valid details
                 </div>
                 <input type="text" placeholder="Description" class="description" id="description" name="taskname"
-                    formControlName="Description">
-                <div @fadeIn *ngIf="ToDoList.get('Description')?.invalid && ToDoList.get('Description')?.touched"
+                    formControlName="Descriiption">
+                <div @fadeIn *ngIf="ToDoList.get('Descriiption')?.invalid && ToDoList.get('Descriiption')?.touched"
                     class="error">
                     Please enter valid details
                 </div>

@@ -42,7 +42,7 @@ export class DialogComponent {
     TaskName: new FormControl('', Validators.required),
     InputBox: new FormControl('', Validators.required),
     AsigneName: new FormControl('', Validators.required),
-    Description: new FormControl('', Validators.required),
+    Descriiption: new FormControl('', Validators.required),
     Repetable: new FormControl(true),
     CreatedOn: new FormControl((new Date().toISOString().replace('T', ' ').slice(0, -5))),
     id: new FormControl(this.tasks.length + 1)
@@ -87,7 +87,7 @@ export class DialogComponent {
     this.ToDoList.get('TaskName')?.setValue(this.tasks[index].TaskName);
     this.ToDoList.get('InputBox')?.setValue(this.tasks[index].InputBox);
     this.ToDoList.get('AsigneName')?.setValue(this.tasks[index].AsigneeName);
-    this.ToDoList.get('Description')?.setValue(this.tasks[index].Descriptions);
+    this.ToDoList.get('Descriiption')?.setValue(this.tasks[index].Descriiption);
     this.ToDoList.get('Repetable')?.setValue(this.tasks[index].Repetable);
     this.ToDoList.get('CreatedOn')?.setValue((this.tasks[index].CreatedOn).replace('T', ' ').slice(0, -5));
     this.isNewData = false;
@@ -107,9 +107,7 @@ export class DialogComponent {
   }
   }
   Submit(a: any, b: any) {
-      console.log(this.ToDoList,this.ToDoList.valid,this.ToDoList,'lllllll')
-  if(this.ToDoList.valid == true){
+    console.log(this.isNewData,'kkkkkkk')
   this.isNewData == true ? this.SharedService.CreateData(a, b).subscribe(() =>  this.SharedService.triggerMethod()) : this.SharedService.EditData(a, b, this.tasks[this.index].TagIds.split(',')).subscribe(() => this.SharedService.triggerMethod())
-  }
 }
 }
