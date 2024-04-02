@@ -3,14 +3,13 @@ import { CommonModule } from '@angular/common';
 import { SharedService } from '../Sevices/shared.service';
 import { DatePipe } from '@angular/common';
 import { AppComponent } from '../app.component';
-import { interval, pipe, retry } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
-import { FormBuilder } from '@angular/forms';
-import { FormArray } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, DatePipe, AppComponent, DatePipe, MatIconModule],
+  imports: [ CommonModule , DatePipe , AppComponent , DatePipe , MatIconModule,FlexLayoutModule ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -20,6 +19,7 @@ export class HomeComponent {
   constructor(private SharedService: SharedService) {
     this.datepipe = new DatePipe('en-US');
   }
+  UserName = localStorage.getItem('user');
   emittedValue: boolean = true;
   tasks: any = [];
   Todaysdate = new Date();
@@ -52,6 +52,7 @@ export class HomeComponent {
     this.SharedService.GetBackendData().subscribe((Data: any) => {
       this.tasks = Data;
       this.dataLoaded = true;
+      console.log(this.tasks,'lol')
     });
   }
 

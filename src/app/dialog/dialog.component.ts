@@ -107,7 +107,6 @@ export class DialogComponent {
   }
   }
   Submit(a: any, b: any) {
-    console.log(this.isNewData,'kkkkkkk')
   this.isNewData == true ? this.SharedService.CreateData(a, b).subscribe(() =>  this.SharedService.triggerMethod()) : this.SharedService.EditData(a, b, this.tasks[this.index].TagIds.split(',')).subscribe(() => this.SharedService.triggerMethod())
 }
 }
