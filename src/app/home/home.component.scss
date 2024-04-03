@@ -1,173 +1,17 @@
-h2 {
-    margin: 0px 0 15px 0;
-}
-
-.add_task,
-.task {
-    display: flex;
-    align-items: center;
-    font-family: Montserrat;
-    width: 300px;
-    height: 270px;
-    border-radius: 10px;
-    margin: 15px;
-}
-
-
-.add_task {
-    display: flex;
-    justify-content: center;
-}
-
-.task {
-    color: #c6c6c6;
-    background-color: #242424;
-    box-shadow: 0px 0px 15px -2px rgba(0, 0, 0, 0.73)
-}
-
-.Window {
-    background-color: #1e1f22;
-    justify-content: center;
-}
-
-.icon,
-.Window,
-.title {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    align-items: center;
-}
-
-.title {
-    margin: 0 30px 0 25px;
-}
-
-.circle,
-.timer,
-.edit,
-.tagname,
-.add_task_button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.icon {
-    font-size: 20px !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-bottom: 1px;
-}
-
-.circle {
-    width: 29px;
-    height: 29px;
-    border-radius: 5px;
-    border: 2px solid #383838;
-    margin-right: 10px;
-}
-
-.inner-circle {
-    height: 21px;
-    border-radius: 2px;
-    width: 21px;
-}
-
-.description {
-    width: 360px;
-    font-size: 16px;
-    margin: 0 0 0 25px;
-}
-
-.timer {
-    margin: 15px 0 0 25px;
-    width: 100px;
-    height: 25px;
-    border-radius: 5px;
-    background-color: #dcdddd;
-}
-
-.tande {
-    display: flex;
-    flex-direction: row;
-}
-
-.edit {
-    font-size: 6px;
-    margin: 15px 0 0 15px;
-    width: 25px;
-    height: 25px;
-    border-radius: 5px;
-    background-color: #dcdddd;
-}
-
-.tagname {
-    margin: 15px 0 0 25px;
-    color: white;
-    font-family: Montserrat;
-    background-color: #FF4A4A;
-    width: 130px;
-    height: 30px;
-    border-radius: 15px;
-    font-size: 16px;
-    font-weight: bold;
-}
-
+//Navebar style 
 .profile_picture {
-    
     width: 50px;
     height: 50px;
     border-radius: 50%;
     background-image: url(../../assets/1.png);
     background-size: cover;
 }
-
-.Name {
-    margin: 0 0 0 15px;
-    font-size: 16px;
-    font-weight: bold;
-}
 .Side_Nav{
+    border-right: solid #383838 3px;    
     background-color: #1e1f22;
     height: 100vh;
 }
-.asigne {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin: 0 0 30px 25px;
-}
 
-.add_task_button {
-    width: 50px;
-    height: 50px;
-    border-radius: 5px;
-    box-shadow: 0px 0px 15px -2px rgba(0, 0, 0, 0.73);
-}
-
-.add_icon {
-    width: 30px;
-}
-
-.icon:active .icon {
-    width: 15px;
-}
-
-.add_task_button:active .add_icon {
-    width: 25px;
-}
-
-.add_icon {
-    transition: 0.2s;
-}
-
-.tagnamecover {
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-}
 .Profile_Picture{
     width: 50px;
     height: 50px;
@@ -179,13 +23,61 @@ h2 {
     padding: 20px 0 0 20px;
 }
 
-.border{
-    border-right: 2px solid #383838;
-    background-color: #1e1f22;
-    height: 95vh;
-    width: 100%;
-    padding: 0 !important;
-    padding: 20px 0 0 20px;
-    border-top-right-radius: 1px;
+//Main content style used to style task cards
+
+.Content_Cover{
     
+    padding: 80px;
+    background-color: #1e1f22;
+}
+
+.Task_Cards{
+    padding: 10px;
+    position: relative;
+    width: 240px;
+    height: 150px;
+    background-color: rgba(49, 49, 49, 5);
+    border-radius: 5PX;
+    box-shadow: 0px 6px 6px 0px rgba(0, 0, 0, 0.3);
+}
+
+.Task_Profile{
+    margin-right: 8px;
+    width: 50px;
+    height: 50px;
+    background-color: #7292E7;
+    border-radius: 50%;
+    font-size: 14px;
+    color: white;
+}
+
+.Task_Name{
+    font-weight: 500;
+    color: white;
+    font-size: 18px;
+}
+.Asignee_Name{
+
+    font-weight: 400;
+    color: #bebebe;
+    font-size: 10px;
+    height: min-content;    
+}
+.Delete_Button{
+    position: absolute;
+    right: 0;
+    top :0;
+    height: 45px;
+    width: 45px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: #FF8787;
+}
+.icon{
+    font-size: 18px;
+}
+.Timer{
+    color: white;
+    font-weight: 500;
+    font-size: 36px;
 }

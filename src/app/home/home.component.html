@@ -1,47 +1,77 @@
+
 <div>
-<div fxFlex="20" class="Side_Nav" fxLayoutAlign="start start">
-    <div class="Profile" fxLayout = "row" fxLayoutAlign="start center" fxLayoutGap="15px">
-        <div class="Profile_Picture"></div>
-        <div fxLayoutAlign="center center" style="font-weight: 400; font-size: 16px; color: antiquewhite;">{{UserName}}</div>
+    <div fxFlex="20" class="Side_Nav" fxLayoutAlign="start start">
+        <div class="Profile" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+            <div class="Profile_Picture"></div>
+            <div fxLayoutAlign="center center" style="font-weight: 400; font-size: 16px; color: antiquewhite;">
+                {{UserName}}</div>
+        </div>
     </div>
-    <div style="width: 100%;height: 100%;" fxLayoutAlign="end center">
-        <div class="border"></div>
+    <div fxFlex="80" fxLayoutAlign="start start" class="Content_Cover" *ngIf="tasks.length > 0 && dataLoaded">
+        <div *ngFor=" let items of tasks let i=index" class="Task_Cards" fxLayout="column">
+            <div class="Task_Detail_Header" fxLayout="row" fxLayoutAlign="start center">
+                <div class="Task_Profile" fxLayoutAlign="center center">
+                    {{(items.AsigneeName).slice(0,2)}}
+                </div>
+                <div class="Task_Title" fxLAyout="column" fxLayoutAlign="start start" fxLayout="column">
+                    <div class="Task_Name" >{{items.TaskName}}</div>
+                    <div  class="Asignee_Name">{{items.AsigneeName}}</div>
+                </div>
+                <div class="Delete_Button" fxLayoutAlign="center center">
+                    <mat-icon class="icon" fxLayoutAlign="center center">delete</mat-icon>
+                </div>
+            </div>
+            <div class="Timer_Container" fxLayoutAlign="center center" fxFlex="100">
+                <div class="Timer">{{StartTimer(items)}}</div>
+            </div>
+        </div>
     </div>
 </div>
-<div fxFlex="80" *ngIf="tasks.length > 0 && dataLoaded" class="Window">
+<!-- <div>
+    <div class="add_task" #evnt>
+        <div class="add_task_button"><img (click)="emit(emittedValue)" class="add_icon"
+                src="../../assets/add_992651.png" alt="add"></div>
+    </div>
+</div> -->
+
+<!-- <div class="tagnamecover" *ngIf="items.Tags != null">
+                    <div class="tagname" *ngFor="let datas of items.Tags.split(',');let j = index ">
+                        {{datas}}
+                    </div>
+</div> -->
+
+<!-- <div *ngIf="tasks.length > 0 && dataLoaded" class="Window">
     <div *ngFor=" let items of tasks let i=index ">
         <div class="task" *ngIf="items.deleted != 1">
             <div>
-                <div class="asigne">
-                    <div class="profile_picture"></div>
-                    <div class="Name">{{items.AsigneeName}}</div>
-                </div>
                 <div class="title">
+                    <div>
+                        <h2>{{items.TaskName}}</h2>
+                    </div>
                     <h2>
                         <div class="circle">
                             <div class="inner-circle" [style.background-color]="myColor(i)[0]"></div>
                         </div>
                     </h2>
-                    <div>
-                        <h2>{{items.TaskName}}</h2>
-                    </div>
-
                 </div>
                 <div class="description">{{items.Descriiption}}</div>
                 <div class="tande">
                     <div class="timer"></div>
                     <div class="edit"><mat-icon (click)="editemiter(i)" class="icon">edit</mat-icon>
                     </div>
-                    <div class="edit" (click)="deleteData(items.id)" style="background-color: rgb(247, 72, 72);"><mat-icon
+                    <div class="edit" (click)="deleteData(i+1)" style="background-color: rgb(247, 72, 72);"><mat-icon
                             class="icon">delete</mat-icon>
                     </div>
                 </div>
-                <!-- <div class="tagnamecover" *ngIf="items.Tags != null">
+                <div class="tagnamecover" *ngIf="items.Tags.split(',').length > 0">
                     <div class="tagname" *ngFor="let datas of items.Tags.split(',');let j = index ">
                         {{datas}}
                     </div>
-                </div> -->
-
+                </div>
+                <div class="asigne">
+                    <div class="profile_picture"></div>
+                    <div class="Name">{{items.AsigneeName}}</div>
+                </div>
             </div>
         </div>
     </div>
@@ -51,5 +81,4 @@
                     src="../../assets/add_992651.png" alt="add"></div>
         </div>
     </div>
-</div>
-</div>
+</div> -->
