@@ -75,12 +75,10 @@ export class DialogComponent {
       this.formbuilder.group({
         Tag: ['']
       }))
-    console.log(creds)
     this.isNewData = true;
   }
 
   SetValue(index: any) {
-    console.log('olo')
     this.index = index;
     let creds: any = [];
     this.ToDoList.get('id')?.setValue(this.tasks[index].id);

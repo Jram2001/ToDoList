@@ -47,7 +47,6 @@ export class SharedService {
   }
 
   VerifyToken( data:any ){
-    console.log(localStorage.getItem('user'))
     return this.http.post('http://localhost:3000/ValidateToken',{"user" : localStorage.getItem('user')},{headers : data})
   }
 
@@ -56,7 +55,7 @@ export class SharedService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    this.VerifyToken(headers).subscribe(x => console.log(x))
+    this.VerifyToken(headers).subscribe()
       return this.VerifyToken(headers);
   }
 }

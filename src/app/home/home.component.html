@@ -7,7 +7,7 @@
                 {{UserName}}</div>
         </div>
     </div>
-    <div fxFlex="80" fxLayoutAlign="start start" class="Content_Cover" *ngIf="tasks.length > 0 && dataLoaded">
+    <div fxFlex="80" fxLayoutAlign="center start" class="Content_Cover" fxLayout="row wrap"  *ngIf="tasks.length > 0 && dataLoaded && this.TimerData != []">
         <div *ngFor=" let items of tasks let i=index" class="Task_Cards" fxLayout="column">
             <div class="Task_Detail_Header" fxLayout="row" fxLayoutAlign="start center">
                 <div class="Task_Profile" fxLayoutAlign="center center">
@@ -17,12 +17,12 @@
                     <div class="Task_Name" >{{items.TaskName}}</div>
                     <div  class="Asignee_Name">{{items.AsigneeName}}</div>
                 </div>
-                <div class="Delete_Button" fxLayoutAlign="center center">
+                <div class="Delete_Button" (click)="deleteData(i+1)" fxLayoutAlign="center center">
                     <mat-icon class="icon" fxLayoutAlign="center center">delete</mat-icon>
                 </div>
             </div>
             <div class="Timer_Container" fxLayoutAlign="center center" fxFlex="100">
-                <div class="Timer">{{StartTimer(items)}}</div>
+                <div [style.color]=" TimerData[i] == 'EXPIRED' ? '#FF6A6A' : 'white' " class="Timer">{{StartTimer(items,i)}}{{TimerData[i]}}</div>
             </div>
         </div>
     </div>

@@ -16,44 +16,50 @@ import { NgZone } from '@angular/core';
 export class HomeComponent {
 
   datepipe: DatePipe;
+  Diffrence: any;
   constructor(private SharedService: SharedService,private zone : NgZone) {
     this.datepipe = new DatePipe('en-IN');
-
   }
+  // Used to store running timer in a array
+  TimerData:String[] = ['00:00:00'];
+  // To store running timer in a array
   UserName = localStorage.getItem('user');
+  // To store emitting value responsible for triggering dialog compoent
   emittedValue: boolean = true;
+  // To store task data
   tasks: any = [];
-  Todaysdate = new Date();
-  taskDate!: Date;
-  Color: any;
-  TagData: any = [];
-  Arrayoftagdata: any = [];
-  index: number = 0;
+  // TO indicate that data fetched from backend
   dataLoaded: boolean = false;
-  Diffrence:any;
-  Time:any;
   
+  //Function used to trigger dialog compoent
   emit(Event: any) {
+    // To emit value and trigger dialog compoent which used to create or delete a task
     this.SharedService.emitValue([-1, this.emittedValue])
+    // Since using same button for opening and closing the dialog compoent initialise with oppposit value after triggering dialog component
     this.emittedValue = !this.emittedValue;
   }
 
+  // Function used to trigger dialog compoent to edit a task 
   editemiter(Index: any) {
+    // To emit value and open dialog compoent with index value for editting purpose 
     this.SharedService.emitValue([Index, true])
+    // To close dialog compoent
     this.emittedValue = false;
   }
+
   ngAfterViewInit() {
+    //
     this.SharedService.currentuser.subscribe()
     this.SharedService.ValidateUser();
-    this.SharedService.triggerMethodSubject.subscribe((x: any) => {
-      this.getData();
-    });
     this.getData();
   }
 
   getData() {
     this.SharedService.GetBackendData().subscribe((Data: any) => {
       this.tasks = Data;
+      for(let i = 0; i < Data.length; i++){
+        this.TimerData.push("00:00:00");
+      }
       this.dataLoaded = true;
     });
   }
@@ -62,11 +68,13 @@ export class HomeComponent {
     this.SharedService.DeleteData(index).subscribe((x: any) => { this.getData() });
   }
 
-  StartTimer(DateDate:any) {
-      var string = this.datepipe.transform(DateDate.CreatedOn, 'medium');
-      var time;
-      return setInterval(() => {
-      var mydate:Date = new Date(`${string}`)
+  StartTimer(Task:any,Index:any) {
+    //to convert date format
+      var string = this.datepipe.transform(Task.CreatedOn, 'medium');
+      setInterval(() => {
+      //to converted the formated date into date variable
+      var mydate:Date = new Date(`${string}`);
+      //to find date which we compare to present 
       var TomorrowsDate = new Date( `
       ${new Date().getFullYear()}-
       ${(new Date().getMonth() + 1)< 10 ? '0' + (new Date().getMonth() + 1) : (new Date().getMonth() + 1)}-
@@ -74,34 +82,41 @@ export class HomeComponent {
       ${mydate.getHours()}:
       ${mydate.getMinutes()}:
       ${mydate.getSeconds()}`) 
+      //to initalise present time
       var Todaysdate: Date = new Date();
+      //to find diffrence between present and task time
       this.Diffrence = TomorrowsDate.getTime() - Todaysdate.getTime();
-      var days = Math.floor(this.Diffrence / (1000 * 60 * 60 * 24));
+      //to find  diffrence in hours to display in front end
       var hours = Math.floor((this.Diffrence % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      //to find diffrence in minutes to display in front end
       var minutes = Math.floor((this.Diffrence % (1000 * 60 * 60)) / (1000 * 60));
+      //to find diffrence in seconds to display in front end
       var seconds = Math.floor((this.Diffrence % (1000 * 60)) / 1000);
-      console.log(`${hours} + ":" + ${minutes}  + ":" + ${seconds}`);
-      return `hello`
-    },1000)
+      // to find DiffrenceInHours to find if task is expired 
+      let Diffrence = new Date(Task.CreatedOn).getHours() - Todaysdate.getHours();
+      // to find DiffrenceInDays to find if the task is expired 
+      let DiffrenceInDays = Diffrence / (86400000);
+      // Finding if the task is expred 
+      if ((DiffrenceInDays < 1 || this.tasks[Index].Repetable == 1) && Diffrence >= 0) {
+      // Setting display data in frontend
+      this.TimerData[Index] = `${hours} : ${minutes} : ${seconds}`;
+      }else{
+      // Labling expired in frontend
+      this.TimerData[Index] = `EXPIRED`;
+      }
+      },1000)
   }
-  
-
-
-
-
-
-
-
+}
 
   // myColor(index: any) {
-  //   this.taskDate = new Date(this.tasks[index].CreatedOn);
+  //   this.taskDate = new Date(this.tasks[2].CreatedOn);
   //   let DiffrenceInHours = this.taskDate.getHours() - this.Todaysdate.getHours();
   //   let DiffrenceInDays = DiffrenceInHours / (86400000);
-  //   if ((DiffrenceInDays < 1 || this.tasks[index].Repetable == 1) && DiffrenceInHours > 0) {
-  //     return ['#a3ff82']
+  //   if ((DiffrenceInDays < 1 || this.tasks[2].Repetable == 1) && DiffrenceInHours > 0) {
+  //     console.log('pass')
   //   }
   //   else {
-  //     return ['#ff2929']
+  //     console.log('fail')
   //   }
   // }
 
@@ -111,7 +126,3 @@ export class HomeComponent {
   //     return this.datepipe.transform(new Date(this.taskDate.getTime() - this.Todaysdate.getTime()), 'HH:mm:ss') || new Date("00:00:00");
   //   }, 1000);
   // }
-
-
-}
-
