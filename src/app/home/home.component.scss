@@ -81,3 +81,44 @@
     font-weight: 500;
     font-size: 36px;
 }
+
+.Dialog_Container{
+    border-left: solid #383838 3px;
+    background-color: #1e1f22;
+}
+
+.input{
+    background-color : #383838;
+    border: none;
+    padding: 14px;
+    border-radius: 3px;
+    box-shadow: 0px 6px 6px 0px rgba(0, 0, 0, 0.3);
+}
+.Input_Container{
+    margin: 10px  0px;
+}
+.error{
+    margin: 0 5px 5px 0 ;
+    font: 12px;
+    color: #FF8787;
+}
+
+.Repetable{
+    height: 100%;
+}
+
+#Description{
+    height: 70px;
+}
+.submit_button{
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 3px;
+    border: none;
+    background-color: #7292E7;
+    color: white;
+    box-shadow: 0px 6px 6px 0px rgba(0, 0, 0, 0.3);
+}
+.submit_button:active {
+    box-shadow: none;
+}

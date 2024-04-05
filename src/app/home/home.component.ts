@@ -6,10 +6,16 @@ import { AppComponent } from '../app.component';
 import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgZone } from '@angular/core';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ CommonModule , DatePipe , AppComponent , DatePipe , MatIconModule,FlexLayoutModule ],
+  imports: [MatSlideToggleModule,MatDatepickerModule,ReactiveFormsModule, MatFormFieldModule,CommonModule , DatePipe , AppComponent , DatePipe , MatIconModule,FlexLayoutModule ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -17,9 +23,10 @@ export class HomeComponent {
 
   datepipe: DatePipe;
   Diffrence: any;
-  constructor(private SharedService: SharedService,private zone : NgZone) {
+  constructor(private SharedService: SharedService,private zone : NgZone,private formbuilder: FormBuilder) {
     this.datepipe = new DatePipe('en-IN');
   }
+
   // Used to store running timer in a array
   TimerData:String[] = ['00:00:00'];
   // To store running timer in a array
@@ -31,6 +38,15 @@ export class HomeComponent {
   // TO indicate that data fetched from backend
   dataLoaded: boolean = false;
   
+  Task_form = new FormGroup({
+    TaskName: new FormControl('', Validators.required),
+    AsigneName: new FormControl('', Validators.required),
+    Descriiption: new FormControl('', Validators.required),
+    Repetable: new FormControl(true),
+    CreatedOn: new FormControl((new Date().toISOString().replace('T', ' ').slice(0, -5))),
+    id: new FormControl(this.tasks.length + 1)
+  });
+
   //Function used to trigger dialog compoent
   emit(Event: any) {
     // To emit value and trigger dialog compoent which used to create or delete a task
