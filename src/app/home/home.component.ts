@@ -11,22 +11,35 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { trigger, transition, style, animate, state } from '@angular/animations';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [MatSlideToggleModule,MatDatepickerModule,ReactiveFormsModule, MatFormFieldModule,CommonModule , DatePipe , AppComponent , DatePipe , MatIconModule,FlexLayoutModule ],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrl: './home.component.scss',
+    animations: [
+    trigger('fadeIn', [
+      state(':enter', style({
+        transform: 'width : 100%'
+      })),
+      state(':leave', style({
+        transform: 'width : 0'
+      })),
+      transition('hidden <=> visible', [
+        animate('500ms ease-in')
+      ])
+    ])
+  ]
 })
 export class HomeComponent {
-
   datepipe: DatePipe;
   Diffrence: any;
   constructor(private SharedService: SharedService,private zone : NgZone,private formbuilder: FormBuilder) {
     this.datepipe = new DatePipe('en-IN');
   }
-
+  animationData: any = 'visible';
   // Used to store running timer in a array
   TimerData:String[] = ['00:00:00'];
   // To store running timer in a array
@@ -44,7 +57,8 @@ export class HomeComponent {
     Descriiption: new FormControl('', Validators.required),
     Repetable: new FormControl(true),
     CreatedOn: new FormControl((new Date().toISOString().replace('T', ' ').slice(0, -5))),
-    id: new FormControl(this.tasks.length + 1)
+    id: new FormControl(this.tasks.length + 1),
+    Label : new FormControl('none', Validators.required),
   });
 
   //Function used to trigger dialog compoent
@@ -62,7 +76,6 @@ export class HomeComponent {
     // To close dialog compoent
     this.emittedValue = false;
   }
-
   ngAfterViewInit() {
     //
     this.SharedService.currentuser.subscribe()
@@ -122,7 +135,29 @@ export class HomeComponent {
       }
       },1000)
   }
+
+  Submit(Task_Data:any){
+    console.log(Task_Data.value.Descriiption)
+    if(Task_Data.valid){
+    this.SharedService.GenerateLabel(Task_Data.value.Descriiption).subscribe((data:any) => {
+      this.Task_form.get('Label')?.setValue(data.response);
+      this.SharedService.CreateData(Task_Data.value,'mdslds').subscribe((data:any) => {
+        console.log(data)
+      });
+    })
+  }else{
+    console.log(Task_Data,Task_Data.valid,'lololol')
+  }
+  }
+
+  LeaveDom(){
+    this.animationData = 'hidden';
+  }
+  EnterDOM(){
+    this.animationData = 'visible';
+  }
 }
+
 
   // myColor(index: any) {
   //   this.taskDate = new Date(this.tasks[2].CreatedOn);

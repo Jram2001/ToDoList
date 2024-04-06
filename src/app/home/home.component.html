@@ -1,13 +1,13 @@
 
-<div>
-    <div fxFlex="20" class="Side_Nav" fxLayoutAlign="start start">
+<div class="home">
+    <!-- <div fxFlex="20" class="Side_Nav" fxLayoutAlign="start start">
         <div class="Profile" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
             <div class="Profile_Picture"></div>
             <div fxLayoutAlign="center center" style="font-weight: 400; font-size: 16px; color: antiquewhite;">
                 {{UserName}}</div>
         </div>
-    </div>
-    <div  fxLayoutAlign="center start" class="Content_Cover" fxLayout="row wrap"  *ngIf="tasks.length > 0 && dataLoaded && this.TimerData != []">
+    </div> -->
+    <div (click)="EnterDOM()"  fxLayoutAlign="center start" class="Content_Cover" fxLayout="row wrap"  *ngIf="tasks.length > 0 && dataLoaded && this.TimerData != []">
         <div *ngFor=" let items of tasks let i=index" class="Task_Cards" fxLayout="column">
             <div class="Task_Detail_Header" fxLayout="row" fxLayoutAlign="start center">
                 <div class="Task_Profile" fxLayoutAlign="center center">
@@ -27,8 +27,10 @@
         </div>
     </div>
 </div>
-
-<div fxFlex="30" fxLayoutAlign="center center" class="Dialog_Container">
+<div fxFlex="30" *ngIf="animationData == 'visible'" fxLayoutAlign="center center" class="Dialog_Container" id="Dialog">
+    <div (click)="LeaveDom()" class="close_button">
+        <mat-icon style="font-size: 32px;">clear</mat-icon>
+    </div>
     <form [formGroup]="Task_form" class="Heading" fxLayout="column" fxFlex="80">
         <div class="Input_Container" fxLayout="column">
             <div fxLayoutAlign="start center" fxLayout="row" *ngIf="Task_form.get('TaskName')?.invalid && Task_form.get('TaskName')?.touched">
@@ -64,7 +66,7 @@
             </div>
             <textarea type="text" placeholder="Description" class="input" id="Description" formControlName="Descriiption"></textarea>
         </div>
-        <Button class="submit_button">SUBMIT</Button>
+        <Button class="submit_button" (click)="Submit(Task_form)" >SUBMIT</Button>
     </form>
 </div>
 

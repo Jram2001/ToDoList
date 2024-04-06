@@ -26,6 +26,7 @@
 //Main content style used to style task cards
 
 .Content_Cover{
+    height: 100vh;
     padding: 80px 20px;
     background-color: #1e1f22;
 }
@@ -121,4 +122,13 @@
 }
 .submit_button:active {
     box-shadow: none;
+}
+
+.close_button{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 5px;
+    color: #383838;
+    font-size: 32px;
 }

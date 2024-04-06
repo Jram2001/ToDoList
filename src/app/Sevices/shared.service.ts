@@ -25,8 +25,12 @@ export class SharedService {
     return this.http.get(`http://localhost:3000/delete/${index}`);
   }
 
+  GenerateLabel(Description:String){
+    return this.http.post('http://localhost:3000/generate-text', { "TaskDescription" : Description })
+  }
+
   CreateData(a: any, b: any) {
-    console.log('hello', a, b)
+    console.log('hello  sm,dsmd,s', a, b)
     return this.http.post('http://localhost:3000/create', [a, b]);
   }
 
