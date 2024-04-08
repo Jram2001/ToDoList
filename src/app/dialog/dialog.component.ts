@@ -96,7 +96,7 @@ export class DialogComponent {
 
     creds = this.tagform.get('credentials') as FormArray;
     if(this.tasks[index].Tags){
-    this.tasks[index].Tags.split(',').map((data: any) => {
+    this.tasks[index].Tags.split(',').map((data : any) => {
       creds.push(
         this.formbuilder.group({
           Tag: [`${data}`]
@@ -105,6 +105,6 @@ export class DialogComponent {
   }
   }
   Submit(a: any, b: any) {
-  this.isNewData == true ? this.SharedService.CreateData(a, b).subscribe(() =>  this.SharedService.triggerMethod()) : this.SharedService.EditData(a, b, this.tasks[this.index].TagIds.split(',')).subscribe(() => this.SharedService.triggerMethod())
+  // this.isNewData == true ? this.SharedService.CreateData(a, b).subscribe(() =>  this.SharedService.triggerMethod()) : this.SharedService.EditData(a, b, this.tasks[this.index].TagIds.split(',')).subscribe(() => this.SharedService.triggerMethod())
 }
 }

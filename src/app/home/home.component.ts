@@ -39,6 +39,16 @@ export class HomeComponent {
   constructor(private SharedService: SharedService,private zone : NgZone,private formbuilder: FormBuilder) {
     this.datepipe = new DatePipe('en-IN');
   }
+  // To Store Data to be Displayed
+  FilerDate:any;
+  //To create a unique set to hold tag values
+  UniqueTag: Set<any> = new Set();
+  //used to store cusrrent day value
+  ThisDay:any = ''+(new Date().toString()).split(' ')[2]
+  //used to store present month data
+  ThisMonth:any  = (new Date().getMonth() + 1)< 10 ? '0' + (new Date().getMonth() + 1) : (new Date().getMonth() + 1);
+  //used to store present year data
+  ThisYear:any = new Date().getFullYear();
   animationData: any = 'visible';
   // Used to store running timer in a array
   TimerData:String[] = ['00:00:00'];
@@ -48,9 +58,11 @@ export class HomeComponent {
   emittedValue: boolean = true;
   // To store task data
   tasks: any = [];
-  // TO indicate that data fetched from backend
+  // To indicate that data fetched from backend
   dataLoaded: boolean = false;
-  
+  //Used to indicate if the form is used to edit or create a task data
+  Edit_Data = false;
+
   Task_form = new FormGroup({
     TaskName: new FormControl('', Validators.required),
     AsigneName: new FormControl('', Validators.required),
@@ -60,6 +72,16 @@ export class HomeComponent {
     id: new FormControl(this.tasks.length + 1),
     Label : new FormControl('none', Validators.required),
   });
+  // To set already available data to edit 
+  Edit_Task(Task:any){
+    this.Edit_Data = true;
+    this.Task_form.get('id')?.setValue(Task.id);
+    this.Task_form.get('TaskName')?.setValue(Task.TaskName);
+    this.Task_form.get('AsigneName')?.setValue(Task.AsigneeName);
+    this.Task_form.get('Descriiption')?.setValue(Task.Descriiption);
+    this.Task_form.get('Repetable')?.setValue(Task.Repetable);
+    this.Task_form.get('CreatedOn')?.setValue((Task.CreatedOn).replace('T', ' ').slice(0, -5));
+  }
 
   //Function used to trigger dialog compoent
   emit(Event: any) {
@@ -77,7 +99,6 @@ export class HomeComponent {
     this.emittedValue = false;
   }
   ngAfterViewInit() {
-    //
     this.SharedService.currentuser.subscribe()
     this.SharedService.ValidateUser();
     this.getData();
@@ -86,11 +107,20 @@ export class HomeComponent {
   getData() {
     this.SharedService.GetBackendData().subscribe((Data: any) => {
       this.tasks = Data;
-      for(let i = 0; i < Data.length; i++){
-        this.TimerData.push("00:00:00");
-      }
+      this.FilerDate = Data;
+      this.AssignData(Data);
       this.dataLoaded = true;
     });
+  }
+
+  AssignData(Data:any){
+    this.TimerData.length = 0;
+    console.log(this.TimerData);
+    for(let i = 0; i < this.FilerDate.length; i++){
+      this.UniqueTag.add(Data[i].Label);
+      this.TimerData.push("00:00:00");
+    }
+    console.log(this.TimerData)
   }
 
   deleteData(index: number) {
@@ -103,11 +133,11 @@ export class HomeComponent {
       setInterval(() => {
       //to converted the formated date into date variable
       var mydate:Date = new Date(`${string}`);
-      //to find date which we compare to present 
+      //to find date which we compare to present
       var TomorrowsDate = new Date( `
-      ${new Date().getFullYear()}-
-      ${(new Date().getMonth() + 1)< 10 ? '0' + (new Date().getMonth() + 1) : (new Date().getMonth() + 1)}-
-      ${(new Date().getDay() + 1)< 10 ? '0' + (new Date().getDay() + 1) : (new Date().getDay() + 1)} 
+      ${this.ThisYear}-
+      ${this.ThisMonth}-
+      ${this.ThisDay} 
       ${mydate.getHours()}:
       ${mydate.getMinutes()}:
       ${mydate.getSeconds()}`) 
@@ -125,6 +155,7 @@ export class HomeComponent {
       let Diffrence = new Date(Task.CreatedOn).getHours() - Todaysdate.getHours();
       // to find DiffrenceInDays to find if the task is expired 
       let DiffrenceInDays = Diffrence / (86400000);
+      // console.log(TomorrowsDate,Todaysdate,this.Diffrence,hours,minutes,seconds,Diffrence,DiffrenceInDays)
       // Finding if the task is expred 
       if ((DiffrenceInDays < 1 || this.tasks[Index].Repetable == 1) && Diffrence >= 0) {
       // Setting display data in frontend
@@ -137,13 +168,10 @@ export class HomeComponent {
   }
 
   Submit(Task_Data:any){
-    console.log(Task_Data.value.Descriiption)
     if(Task_Data.valid){
     this.SharedService.GenerateLabel(Task_Data.value.Descriiption).subscribe((data:any) => {
       this.Task_form.get('Label')?.setValue(data.response);
-      this.SharedService.CreateData(Task_Data.value,'mdslds').subscribe((data:any) => {
-        console.log(data)
-      });
+      this.Edit_Data == false ? this.SharedService.CreateData(Task_Data.value,'mdslds').subscribe(() =>  {this.Edit_Data = false}) : this.SharedService.EditData(Task_Data.value,'mdslds').subscribe(() => {this.Edit_Data = false})
     })
   }else{
     console.log(Task_Data,Task_Data.valid,'lololol')
@@ -156,6 +184,20 @@ export class HomeComponent {
   EnterDOM(){
     this.animationData = 'visible';
   }
+
+  ApllayFilter(Label:any){
+    this.FilerDate = this.tasks.filter((task: any, index: any) => {
+      console.log( this.tasks[index] === Label ,Label,this.tasks[index])
+        return this.tasks[index].Label === Label;
+    });
+    this.AssignData(this.FilerDate);
+  }
+
+  RemoveFilter(){
+    this.FilerDate = this.tasks;
+  }
+
+
 }
 
 

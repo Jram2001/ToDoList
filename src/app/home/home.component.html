@@ -1,5 +1,6 @@
 
-<div class="home">
+<div class="home" fxFlex="100">
+
     <!-- <div fxFlex="20" class="Side_Nav" fxLayoutAlign="start start">
         <div class="Profile" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
             <div class="Profile_Picture"></div>
@@ -7,9 +8,64 @@
                 {{UserName}}</div>
         </div>
     </div> -->
-    <div (click)="EnterDOM()"  fxLayoutAlign="center start" class="Content_Cover" fxLayout="row wrap"  *ngIf="tasks.length > 0 && dataLoaded && this.TimerData != []">
-        <div *ngFor=" let items of tasks let i=index" class="Task_Cards" fxLayout="column">
-            <div class="Task_Detail_Header" fxLayout="row" fxLayoutAlign="start center">
+    <div fxFlex="30" *ngIf="animationData == 'visible'" fxLayoutAlign="center center" class="Dialog_Container" id="Dialog">
+        <div (click)="LeaveDom()" class="close_button">
+            <mat-icon style="font-size: 32px;">clear</mat-icon>
+        </div>
+        <form [formGroup]="Task_form" class="Heading" fxLayout="column" fxFlex="80">
+            <div class="Input_Container" fxLayout="column">
+                <div fxLayoutAlign="start center" fxLayout="row"
+                    *ngIf="Task_form.get('TaskName')?.invalid && Task_form.get('TaskName')?.touched">
+                    <mat-icon class="error">report</mat-icon>
+                    <div @fadeIn class="error">
+                        Please enter valid details
+                    </div>
+                </div>
+                <div fxLayoutAlign="space-between center">
+                    <input fxFlex="70" type="text" placeholder="Task Name" class="input" id="Task_Name"
+                        formControlName="TaskName">
+                    <div fxFlex="25" fxLayoutAlign="center center" style="height: 43.3px;padding: 0px;"
+                        class="input Repetable">
+                        <mat-slide-toggle fxLayoutAlign="center center" formControlName="Repetable"
+                            color="basic"></mat-slide-toggle>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="Input_Container" fxLayout="column">
+                <div fxLayoutAlign="start center" fxLayout="row"
+                    *ngIf="Task_form.get('AsigneName')?.invalid && Task_form.get('AsigneName')?.touched">
+                    <mat-icon class="error">report</mat-icon>
+                    <div @fadeIn class="error">
+                        Please enter valid details
+                    </div>
+                </div>
+                <input type="text" placeholder="AsigneName" class="input" id="Asigne" formControlName="AsigneName">
+            </div>
+            <div class="Input_Container" fxLayout="column">
+                <div fxLayoutAlign="start center" fxLayout="row"
+                    *ngIf="Task_form.get('Descriiption')?.invalid && Task_form.get('Descriiption')?.touched">
+                    <mat-icon class="error">report</mat-icon>
+                    <div @fadeIn class="error">
+                        Please enter valid details
+                    </div>
+                </div>
+                <textarea type="text" placeholder="Description" class="input" id="Description"
+                    formControlName="Descriiption"></textarea>
+            </div>
+            <Button class="submit_button" (click)="Submit(Task_form)">SUBMIT</Button>
+        </form>
+    </div>
+    <div fxLayout="column" fxFlex="100" (click)="EnterDOM()"  fxLayoutAlign="start start" class="Content_Cover"  *ngIf="tasks.length > 0 && dataLoaded && this.TimerData != []">
+        <div fxLayout="row">
+        <div fxLayoutAlign="center center" fxLayoutAlign="space-between" (click)="ApllayFilter(items)" class="Filter_Tag" *ngFor="let items of UniqueTag let i = index">
+            <div fxLayoutAlign="center center" class="Filter_Name" >{{items}}</div>
+            <mat-icon fxLayoutAlign="end center" class="Remove_Filter"  style="font-size: 14px;">clear</mat-icon>
+        </div>
+        </div>
+        <div fxLayout="row wrap" >
+            <div *ngFor=" let items of FilerDate let i=index" class="Task_Cards" fxLayout="column">
+            <div (click)="Edit_Task(items)" class="Task_Detail_Header" fxLayout="row" fxLayoutAlign="start center">
                 <div class="Task_Profile" fxLayoutAlign="center center">
                     {{(items.AsigneeName).slice(0,2)}}
                 </div>
@@ -23,52 +79,12 @@
             </div>
             <div class="Timer_Container" fxLayoutAlign="center center" fxFlex="100">
                 <div [style.color]=" TimerData[i] == 'EXPIRED' ? '#FF6A6A' : 'white' " class="Timer">{{StartTimer(items,i)}}{{TimerData[i]}}</div>
+                <div>{{i}}</div>
+            </div>
             </div>
         </div>
     </div>
-</div>
-<div fxFlex="30" *ngIf="animationData == 'visible'" fxLayoutAlign="center center" class="Dialog_Container" id="Dialog">
-    <div (click)="LeaveDom()" class="close_button">
-        <mat-icon style="font-size: 32px;">clear</mat-icon>
-    </div>
-    <form [formGroup]="Task_form" class="Heading" fxLayout="column" fxFlex="80">
-        <div class="Input_Container" fxLayout="column">
-            <div fxLayoutAlign="start center" fxLayout="row" *ngIf="Task_form.get('TaskName')?.invalid && Task_form.get('TaskName')?.touched">
-            <mat-icon class="error" >report</mat-icon>
-                <div @fadeIn class="error">
-                    Please enter valid details
-                </div>
-            </div>
-            <div fxLayoutAlign="space-between center">
-                <input fxFlex="70" type="text" placeholder="Task Name" class="input" id="Task_Name" formControlName="TaskName">
-                <div fxFlex="25" fxLayoutAlign="center center" style="height: 43.3px;padding: 0px;" class="input Repetable">
-                    <mat-slide-toggle fxLayoutAlign="center center" formControlName="Repetable" color="basic"></mat-slide-toggle>
-                </div>
-            </div>
-        </div>
 
-        <div class="Input_Container" fxLayout="column">
-            <div fxLayoutAlign="start center" fxLayout="row" *ngIf="Task_form.get('AsigneName')?.invalid && Task_form.get('AsigneName')?.touched">
-            <mat-icon class="error">report</mat-icon>
-                <div @fadeIn class="error">
-                    Please enter valid details
-                </div>
-            </div>
-        <input type="text" placeholder="AsigneName" class="input" id="Asigne" formControlName="AsigneName">
-        </div>
-
-        <div class="Input_Container" fxLayout="column">
-            <div fxLayoutAlign="start center" fxLayout="row" *ngIf="Task_form.get('Descriiption')?.invalid && Task_form.get('Descriiption')?.touched">
-            <mat-icon class="error">report</mat-icon>
-                <div @fadeIn class="error">
-                    Please enter valid details
-                </div>
-            </div>
-            <textarea type="text" placeholder="Description" class="input" id="Description" formControlName="Descriiption"></textarea>
-        </div>
-        <Button class="submit_button" (click)="Submit(Task_form)" >SUBMIT</Button>
-    </form>
-</div>
 
 
 <!-- <div>

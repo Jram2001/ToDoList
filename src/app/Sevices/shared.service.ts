@@ -34,8 +34,8 @@ export class SharedService {
     return this.http.post('http://localhost:3000/create', [a, b]);
   }
 
-  EditData(a: any, b: any, c: any) {
-    return this.http.post('http://localhost:3000/update', [a, b, c]);
+  EditData(a: any, b: any) {
+    return this.http.post('http://localhost:3000/update', [a, b]);
   }
 
   triggerMethod() {
