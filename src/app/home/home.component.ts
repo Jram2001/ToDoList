@@ -1,4 +1,4 @@
-import { Component, EventEmitter, NgModule, Output, Pipe } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, NgModule, Output, Pipe } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedService } from '../Sevices/shared.service';
 import { DatePipe } from '@angular/common';
@@ -36,9 +36,10 @@ import { trigger, transition, style, animate, state } from '@angular/animations'
 export class HomeComponent {
   datepipe: DatePipe;
   Diffrence: any;
-  constructor(private SharedService: SharedService,private zone : NgZone,private formbuilder: FormBuilder) {
+  constructor(private SharedService: SharedService,private zone : NgZone,private formbuilder: FormBuilder , private cdr: ChangeDetectorRef) {
     this.datepipe = new DatePipe('en-IN');
   }
+  FilterName = 'none';
   // To Store Data to be Displayed
   FilerDate:any;
   //To create a unique set to hold tag values
@@ -114,13 +115,10 @@ export class HomeComponent {
   }
 
   AssignData(Data:any){
-    this.TimerData.length = 0;
-    console.log(this.TimerData);
-    for(let i = 0; i < this.FilerDate.length; i++){
-      this.UniqueTag.add(Data[i].Label);
-      this.TimerData.push("00:00:00");
+    console.log(Data)
+    for(let i = 0; i < Data.length; i++){
+      this.UniqueTag.add(this.FilerDate[i].Label);
     }
-    console.log(this.TimerData)
   }
 
   deleteData(index: number) {
@@ -128,9 +126,9 @@ export class HomeComponent {
   }
 
   StartTimer(Task:any,Index:any) {
-    //to convert date format
-      var string = this.datepipe.transform(Task.CreatedOn, 'medium');
+      //to convert date format
       setInterval(() => {
+      var string = this.datepipe.transform(Task.CreatedOn, 'medium');
       //to converted the formated date into date variable
       var mydate:Date = new Date(`${string}`);
       //to find date which we compare to present
@@ -140,7 +138,7 @@ export class HomeComponent {
       ${this.ThisDay} 
       ${mydate.getHours()}:
       ${mydate.getMinutes()}:
-      ${mydate.getSeconds()}`) 
+      ${mydate.getSeconds()}`);
       //to initalise present time
       var Todaysdate: Date = new Date();
       //to find diffrence between present and task time
@@ -186,15 +184,11 @@ export class HomeComponent {
   }
 
   ApllayFilter(Label:any){
-    this.FilerDate = this.tasks.filter((task: any, index: any) => {
-      console.log( this.tasks[index] === Label ,Label,this.tasks[index])
-        return this.tasks[index].Label === Label;
-    });
-    this.AssignData(this.FilerDate);
+    this.FilterName = Label;
   }
 
   RemoveFilter(){
-    this.FilerDate = this.tasks;
+    this.FilterName = 'none';
   }
 
 

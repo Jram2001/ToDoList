@@ -58,13 +58,14 @@
     </div>
     <div fxLayout="column" fxFlex="100" (click)="EnterDOM()"  fxLayoutAlign="start start" class="Content_Cover"  *ngIf="tasks.length > 0 && dataLoaded && this.TimerData != []">
         <div fxLayout="row">
-        <div fxLayoutAlign="center center" fxLayoutAlign="space-between" (click)="ApllayFilter(items)" class="Filter_Tag" *ngFor="let items of UniqueTag let i = index">
-            <div fxLayoutAlign="center center" class="Filter_Name" >{{items}}</div>
-            <mat-icon fxLayoutAlign="end center" class="Remove_Filter"  style="font-size: 14px;">clear</mat-icon>
+        <div fxLayoutAlign="center center" fxLayoutAlign="space-between"  class="Filter_Tag" *ngFor="let items of UniqueTag let i = index">
+            <div fxLayoutAlign="center center" class="Filter_Name" (click)="ApllayFilter(items)" >{{items}}</div>
+            <mat-icon fxLayoutAlign="end center" class="Remove_Filter" (click)="RemoveFilter()" style="font-size: 14px;">clear</mat-icon>
         </div>
         </div>
         <div fxLayout="row wrap" >
-            <div *ngFor=" let items of FilerDate let i=index" class="Task_Cards" fxLayout="column">
+            <div *ngFor=" let items of FilerDate let i=index"  fxLayout="column">
+            <div fxLayout="column" class="Task_Cards" *ngIf="(items.Label == FilterName) || FilterName == 'none' ">
             <div (click)="Edit_Task(items)" class="Task_Detail_Header" fxLayout="row" fxLayoutAlign="start center">
                 <div class="Task_Profile" fxLayoutAlign="center center">
                     {{(items.AsigneeName).slice(0,2)}}
@@ -79,7 +80,7 @@
             </div>
             <div class="Timer_Container" fxLayoutAlign="center center" fxFlex="100">
                 <div [style.color]=" TimerData[i] == 'EXPIRED' ? '#FF6A6A' : 'white' " class="Timer">{{StartTimer(items,i)}}{{TimerData[i]}}</div>
-                <div>{{i}}</div>
+            </div>
             </div>
             </div>
         </div>
