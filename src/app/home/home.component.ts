@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, NgModule, Output, Pipe } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, NgModule, Output, Pipe, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedService } from '../Sevices/shared.service';
 import { DatePipe } from '@angular/common';
@@ -12,6 +12,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { trigger, transition, style, animate, state } from '@angular/animations';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -19,25 +20,26 @@ import { trigger, transition, style, animate, state } from '@angular/animations'
   imports: [MatSlideToggleModule,MatDatepickerModule,ReactiveFormsModule, MatFormFieldModule,CommonModule , DatePipe , AppComponent , DatePipe , MatIconModule,FlexLayoutModule ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
-    animations: [
+  animations: [
     trigger('fadeIn', [
-      state(':enter', style({
-        transform: 'width : 100%'
-      })),
-      state(':leave', style({
-        transform: 'width : 0'
-      })),
-      transition('hidden <=> visible', [
-        animate('500ms ease-in')
-      ])
+        transition(':enter', [
+          style({"transform": "translateY(100px)",opacity: 0}),
+          animate( '400ms {{numberOfDropdownItems}}ms ease-in-out', style({"transform": "translateY(0)",opacity: 1}), )
+        ], {params: {numberOfDropdownItems: 1}}),
+        transition(':leave', [
+          style({"transform": "translateY(0)",opacity: 1}),
+          animate( '400ms ease-in-out', style({"transform": "translateY(100)",opacity: 0}), )
+        ], {params: {numberOfDropdownItems: 1}})
     ])
   ]
 })
 export class HomeComponent {
   datepipe: DatePipe;
   Diffrence: any;
+  router: any;
   constructor(private SharedService: SharedService,private zone : NgZone,private formbuilder: FormBuilder , private cdr: ChangeDetectorRef) {
     this.datepipe = new DatePipe('en-IN');
+    this.router = inject(Router)
   }
   FilterName = 'none';
   // To Store Data to be Displayed
@@ -107,6 +109,7 @@ export class HomeComponent {
 
   getData() {
     this.SharedService.GetBackendData().subscribe((Data: any) => {
+      this.TimerData.length = 0;
       this.tasks = Data;
       this.FilerDate = Data;
       this.AssignData(Data);
@@ -122,7 +125,7 @@ export class HomeComponent {
   }
 
   deleteData(index: number) {
-    this.SharedService.DeleteData(index).subscribe((x: any) => { this.getData() });
+    this.SharedService.DeleteData(index).subscribe((x: any) => { this.router.navigate([this.router.url]) });
   }
 
   StartTimer(Task:any,Index:any) {

@@ -17,7 +17,7 @@
                 <div fxLayoutAlign="start center" fxLayout="row"
                     *ngIf="Task_form.get('TaskName')?.invalid && Task_form.get('TaskName')?.touched">
                     <mat-icon class="error">report</mat-icon>
-                    <div @fadeIn class="error">
+                    <div class="error">
                         Please enter valid details
                     </div>
                 </div>
@@ -64,24 +64,24 @@
         </div>
         </div>
         <div fxLayout="row wrap" >
-            <div *ngFor=" let items of FilerDate let i=index"  fxLayout="column">
-            <div fxLayout="column" class="Task_Cards" *ngIf="(items.Label == FilterName) || FilterName == 'none' ">
-            <div (click)="Edit_Task(items)" class="Task_Detail_Header" fxLayout="row" fxLayoutAlign="start center">
-                <div class="Task_Profile" fxLayoutAlign="center center">
-                    {{(items.AsigneeName).slice(0,2)}}
+            <div [@fadeIn]="{value: '', params: {numberOfDropdownItems : i*40 } }" class="Repeted_Tasks" *ngFor=" let items of FilerDate let i=index"  fxLayout="column">
+                <div fxLayout="column" class="Task_Cards" *ngIf="(items.Label == FilterName) || FilterName == 'none' ">
+                <div (click)="Edit_Task(items)" class="Task_Detail_Header" fxLayout="row" fxLayoutAlign="start center">
+                    <div class="Task_Profile" fxLayoutAlign="center center">
+                        {{(items.AsigneeName).slice(0,2)}}
+                    </div>
+                    <div class="Task_Title" fxLAyout="column" fxLayoutAlign="start start" fxLayout="column">
+                        <div class="Task_Name" >{{items.TaskName}}</div>
+                        <div  class="Asignee_Name">{{items.AsigneeName}}</div>
+                    </div>
+                    <div class="Delete_Button" (click)="deleteData(items.id)" fxLayoutAlign="center center">
+                        <mat-icon class="icon" fxLayoutAlign="center center">delete</mat-icon>
+                    </div>
                 </div>
-                <div class="Task_Title" fxLAyout="column" fxLayoutAlign="start start" fxLayout="column">
-                    <div class="Task_Name" >{{items.TaskName}}</div>
-                    <div  class="Asignee_Name">{{items.AsigneeName}}</div>
+                <div class="Timer_Container" fxLayoutAlign="center center" fxFlex="100">
+                    <div [style.color]=" TimerData[i] == 'EXPIRED' ? '#FF6A6A' : 'white' " class="Timer">{{StartTimer(items,i)}}{{TimerData[i]}}</div>
                 </div>
-                <div class="Delete_Button" (click)="deleteData(i+1)" fxLayoutAlign="center center">
-                    <mat-icon class="icon" fxLayoutAlign="center center">delete</mat-icon>
                 </div>
-            </div>
-            <div class="Timer_Container" fxLayoutAlign="center center" fxFlex="100">
-                <div [style.color]=" TimerData[i] == 'EXPIRED' ? '#FF6A6A' : 'white' " class="Timer">{{StartTimer(items,i)}}{{TimerData[i]}}</div>
-            </div>
-            </div>
             </div>
         </div>
     </div>
