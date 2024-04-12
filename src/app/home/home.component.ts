@@ -30,6 +30,16 @@ import { Router } from "@angular/router";
           style({"transform": "translateY(0)",opacity: 1}),
           animate( '400ms ease-in-out', style({"transform": "translateY(100)",opacity: 0}), )
         ], {params: {numberOfDropdownItems: 1}})
+    ]),
+    trigger('SlideInForm', [
+        transition(':enter', [
+          style({"transform": "translateX(-100%)"}),
+          animate( '400ms ease-in-out', style({"transform": "translateX(0%)"}), )
+        ]),
+        transition(':leave', [
+          style({"transform": "translateX(0%)"}),
+          animate( '400ms ease-in-out', style({"transform": "translateX(-100%)"}), )
+        ])
     ])
   ]
 })
@@ -52,7 +62,7 @@ export class HomeComponent {
   ThisMonth:any  = (new Date().getMonth() + 1)< 10 ? '0' + (new Date().getMonth() + 1) : (new Date().getMonth() + 1);
   //used to store present year data
   ThisYear:any = new Date().getFullYear();
-  animationData: any = 'visible';
+  animationData: any = 'hidden';
   // Used to store running timer in a array
   TimerData:String[] = ['00:00:00'];
   // To store running timer in a array
@@ -77,6 +87,7 @@ export class HomeComponent {
   });
   // To set already available data to edit 
   Edit_Task(Task:any){
+    this.animationData = 'visible';
     this.Edit_Data = true;
     this.Task_form.get('id')?.setValue(Task.id);
     this.Task_form.get('TaskName')?.setValue(Task.TaskName);

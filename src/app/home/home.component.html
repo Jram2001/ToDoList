@@ -8,7 +8,7 @@
                 {{UserName}}</div>
         </div>
     </div> -->
-    <div fxFlex="30" *ngIf="animationData == 'visible'" fxLayoutAlign="center center" class="Dialog_Container" id="Dialog">
+    <div fxFlex="30" (click)="EnterDOM()" [@SlideInForm] *ngIf="animationData == 'visible'" fxLayoutAlign="center center" class="Dialog_Container" id="Dialog">
         <div (click)="LeaveDom()" class="close_button">
             <mat-icon style="font-size: 32px;">clear</mat-icon>
         </div>
@@ -57,6 +57,16 @@
         </form>
     </div>
     <div fxLayout="column" fxFlex="100" (click)="EnterDOM()"  fxLayoutAlign="start start" class="Content_Cover"  *ngIf="tasks.length > 0 && dataLoaded && this.TimerData != []">
+        <div fxLayout="row">
+            <div class="Add_Task_Button" fxLayoutAlign="center center">
+                <h1 fxLayoutAlign="center center">+</h1>
+                <div class="circle"></div>
+            </div>
+            <div class="Support_Me Kaasu_Kaasu_Kudu" fxLayoutAlign="center center">
+                <mat-icon style="color: white;z-index: 2;">money</mat-icon>
+                <div class="Money"></div>
+            </div>
+        </div>
         <div fxLayout="row">
         <div fxLayoutAlign="center center" fxLayoutAlign="space-between"  class="Filter_Tag" *ngFor="let items of UniqueTag let i = index">
             <div fxLayoutAlign="center center" class="Filter_Name" (click)="ApllayFilter(items)" >{{items}}</div>
