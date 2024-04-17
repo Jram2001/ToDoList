@@ -18,7 +18,7 @@
     UserData = new FormGroup({
       UserName: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
-    })  
+    })
     Login(){
       this.sharedService.login(this.UserData.value).subscribe( (x:any) => {console.log(x.userId);localStorage.setItem('Token' , x?.accessToken); localStorage.setItem('user' , x?.user) ;localStorage.setItem('UserID' , x?.userID) ;this.router.navigate(['/home'])});
     }

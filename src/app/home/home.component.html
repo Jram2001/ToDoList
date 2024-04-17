@@ -8,7 +8,7 @@
                 {{UserName}}</div>
         </div>
     </div> -->
-    <div fxFlex="30" (click)="EnterDOM()" [@SlideInForm] *ngIf="animationData == 'visible'" fxLayoutAlign="center center" class="Dialog_Container" id="Dialog">
+    <div fxFlex="30" fxFlex.lt-md="100" (click)="EnterDOM()" [@SlideInForm] *ngIf="animationData == 'visible'" fxLayoutAlign="center center" class="Dialog_Container" id="Dialog">
         <div (click)="LeaveDom()" class="close_button">
             <mat-icon style="font-size: 32px;">clear</mat-icon>
         </div>
@@ -56,7 +56,7 @@
             <Button class="submit_button" (click)="Submit(Task_form)">SUBMIT</Button>
         </form>
     </div>
-    <div fxLayout="column" fxFlex="100" (click)="EnterDOM()"  fxLayoutAlign="start start" class="Content_Cover"  *ngIf="tasks.length > 0 && dataLoaded && this.TimerData != []">
+    <div fxLayout="column" (click)="EnterDOM()" fxLayoutAlign.lt-md="center center"  fxLayoutAlign="start start" class="Content_Cover"  *ngIf="tasks.length > 0 && dataLoaded && this.TimerData != []">
         <div fxLayout="row">
             <div class="Add_Task_Button" fxLayoutAlign="center center">
                 <h1 fxLayoutAlign="center center">+</h1>
@@ -73,7 +73,7 @@
             <mat-icon fxLayoutAlign="end center" class="Remove_Filter" (click)="RemoveFilter()" style="font-size: 14px;">clear</mat-icon>
         </div>
         </div>
-        <div fxLayout="row wrap" >
+        <div fxLayout="row wrap" fxLayoutAlign.lt-md="center center" >
             <div [@fadeIn]="{value: '', params: {numberOfDropdownItems : i*40 } }" class="Repeted_Tasks" *ngFor=" let items of FilerDate let i=index"  fxLayout="column">
                 <div fxLayout="column" class="Task_Cards" *ngIf="(items.Label == FilterName) || FilterName == 'none' ">
                 <div (click)="Edit_Task(items)" class="Task_Detail_Header" fxLayout="row" fxLayoutAlign="start center">
@@ -96,7 +96,7 @@
         </div>
     </div>
 
-
+</div>
 
 <!-- <div>
     <div class="add_task" #evnt>

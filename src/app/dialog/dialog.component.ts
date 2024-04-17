@@ -6,7 +6,6 @@ import { FormsModule, FormControl, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { MatIconModule } from '@angular/material/icon';
-import { setTimeout } from 'timers/promises';
 import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
