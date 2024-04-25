@@ -62,9 +62,13 @@
                 <h1 fxLayoutAlign="center center">+</h1>
                 <div class="circle"></div>
             </div>
-            <div class="Support_Me Kaasu_Kaasu_Kudu" fxLayoutAlign="center center">
+            <div #paypal class="Support_Me Kaasu_Kaasu_Kudu" fxLayoutAlign="center center">
                 <mat-icon style="color: white;z-index: 2;">money</mat-icon>
                 <div class="Money"></div>
+            </div>
+            <div>
+            <ngx-paypal  [config]="payPalConfig">
+            </ngx-paypal>
             </div>
         </div>
         <div fxLayout="row">
@@ -94,6 +98,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
 </div>

@@ -32,18 +32,17 @@ declare var Razorpay:any;
 })
 
 export class AppComponent {
-
-    razorPayOptions = {
-    "key":"",
-    "amount": "",
-    "currency": "INR",
-    "name":"",
-    "description": "Skartz Payment",
-    "order_id": "",
-    "handler": (res: any) => {
-      console.log(res);
-    }
-  }
+  //   razorPayOptions = {
+  //   "key":"",
+  //   "amount": "",
+  //   "currency": "INR",
+  //   "name":"",
+  //   "description": "Skartz Payment",
+  //   "order_id": "",
+  //   "handler": (res: any) => {
+  //     console.log(res);
+  //   }
+  // }
   submitted!: boolean;
   loading!: boolean;
   razorPayData: any;
@@ -57,21 +56,21 @@ export class AppComponent {
   localdata: any;
   animationData: any = 'hidden';
 
-  buyRazorPay (formData: any) {
-    this.submitted = true;
-    this. loading = true;
-    this.razorPayData = formData
-    this.dataService.razorPayOrder(this.razorPayData).subscribe ((res) {
-    this.razorPayOptions.key = res ['key'];
-    this.razorPayOptions.amount = res['value'] ['amount'];
-    this.razorPayOptions.name = this. razorPayData['name'];
-    this.razorPayOptions.order_id = res ['value'] ['id'];
-    this.razorPayOptions.handler = this.razorPayResponseHandler;
-    var rzp1 = new Razorpay (this.razorPayOptions);
-    rzp1.open();
-    console.log('opened');
-    })
-  }
+  // buyRazorPay (formData: any) {
+  //   this.submitted = true;
+  //   this. loading = true;
+  //   this.razorPayData = formData
+  //   this.dataService.razorPayOrder(this.razorPayData).subscribe ((res) {
+  //   this.razorPayOptions.key = res ['key'];
+  //   this.razorPayOptions.amount = res['value'] ['amount'];
+  //   this.razorPayOptions.name = this. razorPayData['name'];
+  //   this.razorPayOptions.order_id = res ['value'] ['id'];
+  //   this.razorPayOptions.handler = this.razorPayResponseHandler;
+  //   var rzp1 = new Razorpay (this.razorPayOptions);
+  //   rzp1.open();
+  //   console.log('opened');
+  //   })
+  // }
 
   ngAfterViewInit() {
     this.SharedService.emittedValue.subscribe(inpu => { this.Visibility = inpu[1]; this.animationData = this.Visibility == true ? 'visible' : 'hidden' })

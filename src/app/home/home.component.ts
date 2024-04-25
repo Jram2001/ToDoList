@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, NgModule, Output, Pipe, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, NgModule, Output, Pipe, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedService } from '../Sevices/shared.service';
 import { DatePipe } from '@angular/common';
@@ -13,11 +13,13 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { trigger, transition, style, animate, state } from '@angular/animations';
 import { Router } from "@angular/router";
+import { ICreateOrderRequest } from "ngx-paypal";
+import { NgxPayPalModule } from 'ngx-paypal';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatSlideToggleModule,MatDatepickerModule,ReactiveFormsModule, MatFormFieldModule,CommonModule , DatePipe , AppComponent , DatePipe , MatIconModule,FlexLayoutModule ],
+  imports: [NgxPayPalModule,MatSlideToggleModule,MatDatepickerModule,ReactiveFormsModule, MatFormFieldModule,CommonModule , DatePipe , AppComponent , DatePipe , MatIconModule,FlexLayoutModule ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   animations: [
@@ -44,6 +46,38 @@ import { Router } from "@angular/router";
   ]
 })
 export class HomeComponent {
+  @ViewChild('paypal', { static: true }) paypalElement!: ElementRef ;
+  public payPalConfig: any;
+  product = {
+    price: '1.00',
+    description: 'Check Amount'
+  };
+  payeeEmail: string = "Hello@gmail.com";
+  paidFor: boolean = false; //Payment Successful Message handling
+//   paypalConfig = {//Configuration for paypal Smart Button
+//     createOrder: (data:any, actions:any) => {
+//     return actions.order.create({
+//     purchase_units: [{
+//     description: 'Manager To Owner Payment',
+//     amount: {
+//     currency_code: 'USD',
+//     value: 100
+//     }, payee: {
+//     email_address: this.payeeEmail // to send amout to corresponding Merchant
+//     },
+//     invoice_id: '1234',
+//     }]
+//     });
+//   },
+//   onApprove: async (data:any, actions:any) => {
+//     const order = await actions.order.capture();
+//     this.paidFor = true;
+//     console.log(order)
+//   },
+//   onError: (err: any) => {
+//   console.log(err)
+//   }
+// }
   datepipe: DatePipe;
   Diffrence: any;
   router: any;
@@ -51,6 +85,7 @@ export class HomeComponent {
     this.datepipe = new DatePipe('en-IN');
     this.router = inject(Router)
   }
+
   FilterName = 'none';
   // To Store Data to be Displayed
   FilerDate:any;
@@ -113,6 +148,74 @@ export class HomeComponent {
     this.emittedValue = false;
   }
   ngAfterViewInit() {
+    this.payPalConfig = {
+      currency: "EUR",
+      clientId: "ARcAOpeYbhdhnezJD53uQhs3A9P-ccw60B6bLXTMjVguHmzmZJOH2aipbeiA695MLuTvtjZ2QjzInp-1",
+      createOrder: (data:any) => <ICreateOrderRequest> {
+          intent: "CAPTURE",
+          purchase_units: [
+            {
+              amount: {
+                currency_code: "EUR",
+                value: "9.99",
+                breakdown: {
+                  item_total: {
+                    currency_code: "EUR",
+                    value: "9.99"
+                  }
+                }
+              },
+              items: [
+                {
+                  name: "Enterprise Subscription",
+                  quantity: "1",
+                  category: "DIGITAL_GOODS",
+                  unit_amount: {
+                    currency_code: "EUR",
+                    value: "9.99"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+      advanced: {
+        commit: "true"
+      },
+      style: {
+        label: "paypal",
+        layout: "vertical"
+      },
+      onApprove: (data:any, actions:any) => {
+        console.log(
+          "onApprove - transaction was approved, but not authorized",
+          data,
+          actions
+        );
+        actions.order.get().then((details:any) => {
+          console.log(
+            "onApprove - you can get full order details inside onApprove: ",
+            details
+          );
+        });
+      },
+      onClientAuthorization: (data:any) => {
+        console.log(
+          "onClientAuthorization - you should probably inform your server about completed transaction at this point",
+          data
+        );
+      },
+      onCancel: (data:any, actions:any) => {
+        console.log("OnCancel", data, actions);
+      },
+      onError: (err:any) => {
+        console.log("OnError", err);
+      },
+      onClick: (data:any , actions:any) => {
+        console.log("onClick", data, actions);
+      }
+    };    
+    
     this.SharedService.currentuser.subscribe()
     this.SharedService.ValidateUser();
     this.getData();
