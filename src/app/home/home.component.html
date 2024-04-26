@@ -56,19 +56,19 @@
             <Button class="submit_button" (click)="Submit(Task_form)">SUBMIT</Button>
         </form>
     </div>
-    <div fxLayout="column" (click)="EnterDOM()" fxLayoutAlign.lt-md="center center"  fxLayoutAlign="start start" class="Content_Cover"  *ngIf="tasks.length > 0 && dataLoaded && this.TimerData != []">
-        <div fxLayout="row">
-            <div class="Add_Task_Button" fxLayoutAlign="center center">
+    <div fxLayout="column"   fxLayoutAlign.lt-md="center center"  fxLayoutAlign="start start" class="Content_Cover"  *ngIf="tasks.length > 0 && dataLoaded && this.TimerData != []">
+        <div fxLayoutGap="15px" fxLayout="row wrap">
+            <div (click)="EnterDOM()" class="Add_Task_Button" fxLayoutAlign="center center">
                 <h1 fxLayoutAlign="center center">+</h1>
                 <div class="circle"></div>
             </div>
-            <div #paypal class="Support_Me Kaasu_Kaasu_Kudu" fxLayoutAlign="center center">
+            <div (click)="MakePaymentButtonVisible()" class="Support_Me Kaasu_Kaasu_Kudu" fxLayoutAlign="center center">
                 <mat-icon style="color: white;z-index: 2;">money</mat-icon>
                 <div class="Money"></div>
             </div>
-            <div>
-            <ngx-paypal  [config]="payPalConfig">
-            </ngx-paypal>
+            <div *ngIf="isPaymentButtonVisible">
+                <ngx-paypal class="PayMe" [config]="payPalConfig">
+                </ngx-paypal>
             </div>
         </div>
         <div fxLayout="row">

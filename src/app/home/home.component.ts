@@ -46,7 +46,7 @@ import { NgxPayPalModule } from 'ngx-paypal';
   ]
 })
 export class HomeComponent {
-  @ViewChild('paypal', { static: true }) paypalElement!: ElementRef ;
+  isPaymentButtonVisible:boolean = false;
   public payPalConfig: any;
   product = {
     price: '1.00',
@@ -308,6 +308,9 @@ export class HomeComponent {
     this.FilterName = 'none';
   }
 
+  MakePaymentButtonVisible(){
+    this.isPaymentButtonVisible = !this.isPaymentButtonVisible;
+  }
 
 }
 
