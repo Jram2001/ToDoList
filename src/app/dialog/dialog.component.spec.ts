@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AppComponent } from '../app.component';
 
 import { DialogComponent } from './dialog.component';
 
@@ -8,7 +9,7 @@ describe('DialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DialogComponent]
+      imports: [AppComponent,DialogComponent]
     })
     .compileComponents();
     

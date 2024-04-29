@@ -1,8 +1,7 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, NgModule, Output, Pipe, ViewChild, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, NgModule, Output, Pipe, ViewChild, forwardRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedService } from '../Sevices/shared.service';
 import { DatePipe } from '@angular/common';
-import { AppComponent } from '../app.component';
 import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgZone } from '@angular/core';
@@ -19,7 +18,8 @@ import { NgxPayPalModule } from 'ngx-paypal';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgxPayPalModule,MatSlideToggleModule,MatDatepickerModule,ReactiveFormsModule, MatFormFieldModule,CommonModule , DatePipe , AppComponent , DatePipe , MatIconModule,FlexLayoutModule ],
+  imports: [    
+NgxPayPalModule,MatSlideToggleModule,MatDatepickerModule,ReactiveFormsModule, MatFormFieldModule,CommonModule , DatePipe  , DatePipe , MatIconModule,FlexLayoutModule ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   animations: [
