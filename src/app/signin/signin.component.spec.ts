@@ -13,7 +13,6 @@ describe('SigninComponent', () => {
   let component: SigninComponent;
   let fixture: ComponentFixture<SigninComponent>;
   let httpClientSpy: jasmine.SpyObj<HttpClient>;
-
   beforeEach(waitForAsync(() => {
     const spy = jasmine.createSpyObj('HttpClient',['post'])
     TestBed.configureTestingModule({
@@ -25,7 +24,17 @@ describe('SigninComponent', () => {
       ],
       providers: [
         { provide: HttpClient, useValue: spy },
-        SharedService // Provide the SharedService or mock it as needed
+        {provide : SharedService , useValue: {
+            login(userData: any) {
+              return of({
+                accessToken: 'eyJhbGciOiJIUzI1NiJ9.amF5YXJhbQ.wblL-lMAAk4skSqJcnYJPX2eLCvA6mNH7MeZUozbbOk',
+                user: 'jayaram',
+                userId: 1
+              });
+            }
+        }}, // Provide the SharedService or mock it as needed
+        { provide: Router, useValue: { navigate: jasmine.createSpy('navigate') } }
+
       ]
     }).compileComponents(); // Compile template and CSS
   }));
@@ -41,29 +50,54 @@ describe('SigninComponent', () => {
   });
 
   it ('should set value in local storage', () =>{
+    const UserData = new FormGroup({
+      UserName: new FormControl('jayaram', Validators.required),
+      password: new FormControl('jayaram@123', Validators.required)
+    })
+    const sharedService = SharedService;
     component.UserData = new FormGroup({
       UserName: new FormControl('jayaram', Validators.required),
       password: new FormControl('jayaram@123', Validators.required)
     })
-    const mockReturnValue = {
+      const httpClientSpy = TestBed.inject(HttpClient) as jasmine.SpyObj<HttpClient>;
+      httpClientSpy.post.and.returnValue(of({
       "accessToken": "eyJhbGciOiJIUzI1NiJ9.amF5YXJhbQ.wblL-lMAAk4skSqJcnYJPX2eLCvA6mNH7MeZUozbbOk",
       "user": "jayaram",
       "userId": 1
-    }
+    }));
+          const consoleSpy = spyOn(console,'error')
+    // const mockReturnValue = {
+    //   "accessToken": "eyJhbGciOiJIUzI1NiJ9.amF5YXJhbQ.wblL-lMAAk4skSqJcnYJPX2eLCvA6mNH7MeZUozbbOk",
+    //   "user": "jayaram",
+    //   "userId": 1
+    // }
     // httpClientSpy.post.and.returnValue(of(mockReturnValue));
-    const ShareService = TestBed.inject(SharedService); 
     const router = TestBed.inject(Router);
     component.Login()
-    expect(component.Login()).toHaveBeenCalledWith(component.UserData.value);
+    expect(localStorage.getItem('Token')).toEqual('eyJhbGciOiJIUzI1NiJ9.amF5YXJhbQ.wblL-lMAAk4skSqJcnYJPX2eLCvA6mNH7MeZUozbbOk');
+    expect(localStorage.getItem('user')).toEqual('jayaram');
+    expect(localStorage.getItem('UserID')).toEqual('1');
+    expect(router.navigate).toHaveBeenCalledWith(['/home']);
+    expect(consoleSpy).not.toHaveBeenCalled();
+
   })
 
-  // Add more test cases as needed
-});
-function mockLogin() {
-  return of({
-      "accessToken": "eyJhbGciOiJIUzI1NiJ9.amF5YXJhbQ.wblL-lMAAk4skSqJcnYJPX2eLCvA6mNH7MeZUozbbOk",
-      "user": "jayaram",
-      "userId": 1
+    it ('Throw an error when UserData is null', () =>{
+    const UserData = new FormGroup({
+      UserName: new FormControl('jayaram', Validators.required),
+      password: new FormControl('jayaram@123', Validators.required)
     })
-}
+    const sharedService = SharedService;
+    component.UserData = new FormGroup({
+      UserName: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required)
+    })
+      component.Login()
+      console.log(component.UserData.valid,component.UserData.valid+'s',component.UserData.valid == true)
+      const consoleSpy = spyOn(console,'error')
+      expect(consoleSpy).toHaveBeenCalled();
+      expect(consoleSpy).toHaveBeenCalledWith(' Enter valid details ');
+    })
+});
+
 
