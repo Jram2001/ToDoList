@@ -5,7 +5,8 @@
   import { Router } from '@angular/router';
   import { SharedService } from '../Sevices/shared.service';
   import { RouterModule } from '@angular/router';
-  @Component({
+import { Observable } from 'rxjs';
+    @Component({
     selector: 'app-signin',
     standalone: true,
     imports: [CommonModule,ReactiveFormsModule,RouterModule],
@@ -21,14 +22,19 @@
     })
     Login(){
       if(this.UserData.valid == true){
-      this.sharedService.login(this.UserData.value).subscribe( (x:any) => 
-        {
-          localStorage.setItem('Token' , x?.accessToken); 
-          localStorage.setItem('user' , x?.user);
-          localStorage.setItem('UserID' , x?.userId);
-          this.router.navigate(['/home'])
-        });
-      }else{
+      this.sharedService.login(this.UserData.value).subscribe({
+      next: (x:any) => {
+        localStorage.setItem('Token', x?.accessToken);
+        localStorage.setItem('user', x?.user);
+        localStorage.setItem('UserID', x?.userId);
+        this.router.navigate(['/home']);
+      },
+      error: (error) => {
+        console.log(error,'loll');
+      }
+      });
+      }
+      else{
         console.error(' Enter valid details ')
       }
     }

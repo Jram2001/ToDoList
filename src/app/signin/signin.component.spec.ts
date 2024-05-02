@@ -5,8 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SigninComponent } from './signin.component';
 import { SharedService } from '../Sevices/shared.service';
-import { of } from 'rxjs';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { of, throwError } from 'rxjs';
 
 
 describe('SigninComponent', () => {
@@ -74,30 +73,42 @@ describe('SigninComponent', () => {
     // httpClientSpy.post.and.returnValue(of(mockReturnValue));
     const router = TestBed.inject(Router);
     component.Login()
+    expect(UserData.valid).toBeTrue()
     expect(localStorage.getItem('Token')).toEqual('eyJhbGciOiJIUzI1NiJ9.amF5YXJhbQ.wblL-lMAAk4skSqJcnYJPX2eLCvA6mNH7MeZUozbbOk');
     expect(localStorage.getItem('user')).toEqual('jayaram');
     expect(localStorage.getItem('UserID')).toEqual('1');
     expect(router.navigate).toHaveBeenCalledWith(['/home']);
     expect(consoleSpy).not.toHaveBeenCalled();
-
   })
 
-    it ('Throw an error when UserData is null', () =>{
+  it ('Throw an error when UserData is null', () => {
     const UserData = new FormGroup({
-      UserName: new FormControl('jayaram', Validators.required),
-      password: new FormControl('jayaram@123', Validators.required)
-    })
-    const sharedService = SharedService;
+      UserName: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required)
+    });
     component.UserData = new FormGroup({
       UserName: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
-    })
-      component.Login()
-      console.log(component.UserData.valid,component.UserData.valid+'s',component.UserData.valid == true)
-      const consoleSpy = spyOn(console,'error')
+    });
+      const consoleSpy = spyOn(console,'error');
+      component.Login();
+      console.log(component.UserData.valid,component.UserData.valid+'s',component.UserData.valid == true);
+      expect(UserData.valid).toBeFalse()
       expect(consoleSpy).toHaveBeenCalled();
       expect(consoleSpy).toHaveBeenCalledWith(' Enter valid details ');
-    })
+  })
+
+    it('should Throw an error' , ()=> {  
+      const httpClientSpy = TestBed.inject(HttpClient) as jasmine.SpyObj<HttpClient>;
+      httpClientSpy.post.and.returnValue(of(new Error(' API Failed ')))
+      component.UserData = new FormGroup({
+        UserName: new FormControl('', Validators.required),
+        password: new FormControl('', Validators.required)
+      });
+      const consoleSpy = spyOn(console,'error');
+      expect(consoleSpy).toHaveBeenCalled();
+      expect(consoleSpy).toHaveBeenCalledWith(' API Failed ');
+  })
 });
 
 
