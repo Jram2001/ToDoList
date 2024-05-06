@@ -30,7 +30,7 @@ import { Observable } from 'rxjs';
         this.router.navigate(['/home']);
       },
       error: (error) => {
-        console.log(error,'loll');
+        console.error(error);
       }
       });
       }
@@ -39,7 +39,11 @@ import { Observable } from 'rxjs';
       }
     }
     createAccount(){
-        this.sharedService.CreateUser(this.UserData.value).subscribe( (x:any) => console.log(x));
+      this.sharedService.CreateUser(this.UserData.value).subscribe({
+      error: (error) => {
+        console.error(error);
+      }
+      });
     }
     ngAfterViewInit(){
       localStorage.clear();
