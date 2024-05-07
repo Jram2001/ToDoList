@@ -38,12 +38,18 @@ import { Observable } from 'rxjs';
         console.error(' Enter valid details ')
       }
     }
-    createAccount(){
+    createAccount()
+    {
+      if(this.UserData.valid == true){
       this.sharedService.CreateUser(this.UserData.value).subscribe({
       error: (error) => {
         console.error(error);
       }
       });
+      }
+      else{
+        console.error(' Enter valid details ')
+      }
     }
     ngAfterViewInit(){
       localStorage.clear();

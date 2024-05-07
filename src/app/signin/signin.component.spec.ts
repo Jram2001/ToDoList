@@ -158,50 +158,98 @@ describe('SigninComponentLoginFailed', () => {
     })
 })
 
-  // describe('SigninComponentCreateUSerFailed', () => {
-  //   let component: SigninComponent;
-  //   let fixture: ComponentFixture<SigninComponent>;
-  //   let httpClientSpy: jasmine.SpyObj<HttpClient>;
-  //   beforeEach(waitForAsync(() => {
-  //     const spy = jasmine.createSpyObj('HttpClient',['post'])
-  //     TestBed.configureTestingModule({
-  //       imports: [
-  //         CommonModule,
-  //         RouterModule.forRoot([]),
-  //         ReactiveFormsModule,
-  //         HttpClientModule
-  //       ],
-  //       providers: [
-  //         { provide: HttpClient, useValue: spy },
-  //         {provide : SharedService , useValue: {
-  //             CreateUser(userData: any) {
-  //                 return throwError(() => new Error('Username or password is not valid'));
-  //             }
-  //         }}, // Provide the SharedService or mock it as needed
-  //         { provide: Router, useValue: { navigate: jasmine.createSpy('navigate') } }
+describe('SigninComponentCreateUSerFailed', () => {
+  let component: SigninComponent;
+  let fixture: ComponentFixture<SigninComponent>;
+  let httpClientSpy: jasmine.SpyObj<HttpClient>;
+  beforeEach(waitForAsync(() => {
+    const spy = jasmine.createSpyObj('HttpClient',['post'])
+    TestBed.configureTestingModule({
+      imports: [
+        CommonModule,
+        RouterModule.forRoot([]),
+        ReactiveFormsModule,
+        HttpClientModule
+      ],
+      providers: [
+        { provide: HttpClient, useValue: spy },
+        {provide : SharedService , useValue: {
+            CreateUser(userData: any) {
+                return throwError(() => new Error('Username or password is not valid'));
+            }
+        }}, // Provide the SharedService or mock it as needed
+        { provide: Router, useValue: { navigate: jasmine.createSpy('navigate') } }
+      ]
+    }).compileComponents(); // Compile template and CSS
+    }));
+     beforeEach(() => {
+       fixture = TestBed.createComponent(SigninComponent);
+       component = fixture.componentInstance;
+       fixture.detectChanges();
+     });
+    it ('Throw an error when UserData is null', () => {
+      component.UserData = new FormGroup({
+        UserName: new FormControl('', Validators.required),
+        password: new FormControl('', Validators.required)
+      });
+        const consoleSpy = spyOn(console,'error');
+        component.Login();
+        expect(component.UserData.valid).toBeFalse()
+        expect(consoleSpy).toHaveBeenCalled();
+        expect(consoleSpy).toHaveBeenCalledWith(' Enter valid details ');
+    })
+})
 
-  //       ]
-  //     }).compileComponents(); // Compile template and CSS
-  //     }));
+describe('SigninComponentCreateUSerFailed', () => {
+let component: SigninComponent;
+let fixture: ComponentFixture<SigninComponent>;
+let httpClientSpy: jasmine.SpyObj<HttpClient>;
+beforeEach(waitForAsync(() => {
+  const spy = jasmine.createSpyObj('HttpClient',['post'])
+  TestBed.configureTestingModule({
+    imports: [
+      CommonModule,
+      RouterModule.forRoot([]),
+      ReactiveFormsModule,
+      HttpClientModule
+    ],
+    providers: [
+      { provide: HttpClient, useValue: spy },
+      {provide : SharedService , useValue: {
+          CreateUser(userData: any) {
+              return throwError(() => new Error('Username or password is not valid'));
+          }
+      }}, // Provide the SharedService or mock it as needed
+      { provide: Router, useValue: { navigate: jasmine.createSpy('navigate') } }
+    ]
+  }).compileComponents(); // Compile template and CSS
+  }));
+  beforeEach(() => {
+     fixture = TestBed.createComponent(SigninComponent);
+     component = fixture.componentInstance;
+     fixture.detectChanges();
+  });
+  it ('Create user Invalid form', () => {
+    component.UserData = new FormGroup({
+      UserName: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required)
+    });
+      const consoleSpy = spyOn(console,'error');
+      component.createAccount();
+      expect(component.UserData.valid).toBeFalse()
+      expect(consoleSpy).toHaveBeenCalled();
+      expect(consoleSpy).toHaveBeenCalledWith(' Enter valid details ');
+  })
 
-  //      beforeEach(() => {
-  //        fixture = TestBed.createComponent(SigninComponent);
-  //        component = fixture.componentInstance;
-  //        fixture.detectChanges();
-  //      });
-
-  //     it ('Throw an error when UserData is null', () => {
-  //       component.UserData = new FormGroup({
-  //         UserName: new FormControl('', Validators.required),
-  //         password: new FormControl('', Validators.required)
-  //       });
-  //         const consoleSpy = spyOn(console,'error');
-  //         component.Login();
-  //         expect(component.UserData.valid).toBeFalse()
-  //         expect(consoleSpy).toHaveBeenCalled();
-  //         expect(consoleSpy).toHaveBeenCalledWith(' Enter valid details ');
-  //     })
-
-  // })
-
+  it ('Create user http error', () => {
+    component.UserData = new FormGroup({
+      UserName: new FormControl('jayaam', Validators.required),
+      password: new FormControl('jayaram@123', Validators.required)
+    });
+      const consoleSpy = spyOn(console,'error');
+      component.createAccount();
+      expect(consoleSpy).toHaveBeenCalled();
+      expect(consoleSpy).toHaveBeenCalledWith(new Error('Username or password is not valid'));
+  })
+})
 
