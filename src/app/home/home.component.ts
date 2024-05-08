@@ -215,9 +215,13 @@ export class HomeComponent {
         console.log("onClick", data, actions);
       }
     };    
-    
-    this.SharedService.currentuser.subscribe()
-    this.SharedService.ValidateUser();
+    this.SharedService.ValidateUser().subscribe((x: Object) => 
+    {
+      if(!x){
+      this.router.navigate(['/login'])
+      }
+    }
+  );
     this.getData();
   }
 
@@ -232,7 +236,6 @@ export class HomeComponent {
   }
 
   AssignData(Data:any){
-    console.log(Data)
     for(let i = 0; i < Data.length; i++){
       this.UniqueTag.add(this.FilerDate[i].Label);
     }

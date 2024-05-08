@@ -7,6 +7,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 
 export class SharedService {
+  static login(login: any) {
+    throw new Error('Method not implemented.');
+  }
   constructor(private http: HttpClient) { }
   emittedValue: BehaviorSubject<any> = new BehaviorSubject<any>(true);
   public triggerMethodSubject = new Subject<void>();
@@ -18,7 +21,7 @@ export class SharedService {
   }
 
   GetBackendData() {
-    return this.http.post('http://localhost:3000/todo',{"userId" : 26} );
+    return this.http.post('http://localhost:3000/todo',{"userId" : localStorage.getItem('UserID')} );
   }
 
   DeleteData(index: number) {
