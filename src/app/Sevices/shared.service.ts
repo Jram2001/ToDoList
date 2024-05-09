@@ -7,9 +7,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 
 export class SharedService {
-  static login(login: any) {
-    throw new Error('Method not implemented.');
-  }
+
   constructor(private http: HttpClient) { }
   emittedValue: BehaviorSubject<any> = new BehaviorSubject<any>(true);
   public triggerMethodSubject = new Subject<void>();

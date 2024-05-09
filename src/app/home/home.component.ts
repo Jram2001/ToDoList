@@ -147,7 +147,7 @@ export class HomeComponent {
     // To close dialog compoent
     this.emittedValue = false;
   }
-  ngAfterViewInit() {
+  ngOnInit() {
     this.payPalConfig = {
       currency: "EUR",
       clientId: "ARcAOpeYbhdhnezJD53uQhs3A9P-ccw60B6bLXTMjVguHmzmZJOH2aipbeiA695MLuTvtjZ2QjzInp-1",
