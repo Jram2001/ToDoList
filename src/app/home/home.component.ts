@@ -226,16 +226,21 @@ export class HomeComponent {
   }
 
   getData() {
-    this.SharedService.GetBackendData().subscribe((Data: any) => {
+    this.SharedService.GetBackendData().subscribe({
+      next : (Data: Object) => {
       this.TimerData.length = 0;
       this.tasks = Data;
       this.FilerDate = Data;
       this.AssignData(Data);
       this.dataLoaded = true;
+      },
+      error : (ErrorData:object) => {
+        console.error(ErrorData)
+      }
     });
   }
 
-  AssignData(Data:any){
+  AssignData(Data:any) {
     for(let i = 0; i < Data.length; i++){
       this.UniqueTag.add(this.FilerDate[i].Label);
     }
