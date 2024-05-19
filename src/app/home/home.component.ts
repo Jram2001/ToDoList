@@ -46,8 +46,77 @@ NgxPayPalModule,MatSlideToggleModule,MatDatepickerModule,ReactiveFormsModule, Ma
   ]
 })
 export class HomeComponent {
+
+  public payPalConfig = {
+      currency: "EUR",
+      clientId: "ARcAOpeYbhdhnezJD53uQhs3A9P-ccw60B6bLXTMjVguHmzmZJOH2aipbeiA695MLuTvtjZ2QjzInp-1",
+      createOrder: (data:any) => <ICreateOrderRequest> {
+          intent: "CAPTURE",
+          purchase_units: [
+            {
+              amount: {
+                currency_code: "EUR",
+                value: "9.99",
+                breakdown: {
+                  item_total: {
+                    currency_code: "EUR",
+                    value: "9.99"
+                  }
+                }
+              },
+              items: [
+                {
+                  name: "Enterprise Subscription",
+                  quantity: "1",
+                  category: "DIGITAL_GOODS",
+                  unit_amount: {
+                    currency_code: "EUR",
+                    value: "9.99"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+      advanced: {
+        commit: "true"
+      },
+      style: {
+        label: "paypal",
+        layout: "vertical"
+      },
+      onApprove: (data:any, actions:any) => {
+        console.log(
+          "onApprove - transaction was approved, but not authorized",
+          data,
+          actions
+        );
+        actions.order.get().then((details:any) => {
+          console.log(
+            "onApprove - you can get full order details inside onApprove: ",
+            details
+          );
+        });
+      },
+      onClientAuthorization: (data:any) => {
+        console.log(
+          "onClientAuthorization - you should probably inform your server about completed transaction at this point",
+          data
+        );
+      },
+      onCancel: (data:any, actions:any) => {
+        console.log("OnCancel", data, actions);
+      },
+      onError: (err:any) => {
+        console.log("OnError", err);
+      },
+      onClick: (data:any , actions:any) => {
+        console.log("onClick", data, actions);
+      }
+  }; 
+
   isPaymentButtonVisible:boolean = false;
-  public payPalConfig: any;
+
   product = {
     price: '1.00',
     description: 'Check Amount'
@@ -131,23 +200,16 @@ export class HomeComponent {
     this.Task_form.get('Repetable')?.setValue(Task.Repetable);
     this.Task_form.get('CreatedOn')?.setValue((Task.CreatedOn).replace('T', ' ').slice(0, -5));
   }
-
   //Function used to trigger dialog compoent
-  emit(Event: any) {
-    // To emit value and trigger dialog compoent which used to create or delete a task
-    this.SharedService.emitValue([-1, this.emittedValue])
-    // Since using same button for opening and closing the dialog compoent initialise with oppposit value after triggering dialog component
-    this.emittedValue = !this.emittedValue;
-  }
+  // emit(Event: any) {
+  //   // To emit value and trigger dialog compoent which used to create or delete a task
+  //   this.SharedService.emitValue([-1, this.emittedValue])
+  //   // Since using same button for opening and closing the dialog compoent initialise with oppposit value after triggering dialog component
+  //   this.emittedValue = !this.emittedValue;
+  // }
 
-  // Function used to trigger dialog compoent to edit a task 
-  editemiter(Index: any) {
-    // To emit value and open dialog compoent with index value for editting purpose 
-    this.SharedService.emitValue([Index, true])
-    // To close dialog compoent
-    this.emittedValue = false;
-  }
-  ngOnInit() {
+
+  ngOnInit() {   
     this.payPalConfig = {
       currency: "EUR",
       clientId: "ARcAOpeYbhdhnezJD53uQhs3A9P-ccw60B6bLXTMjVguHmzmZJOH2aipbeiA695MLuTvtjZ2QjzInp-1",
@@ -214,7 +276,7 @@ export class HomeComponent {
       onClick: (data:any , actions:any) => {
         console.log("onClick", data, actions);
       }
-    };    
+    }; 
     this.SharedService.ValidateUser().subscribe((x: Object) => 
     {
       if(!x){
@@ -233,9 +295,6 @@ export class HomeComponent {
       this.FilerDate = Data;
       this.AssignData(Data);
       this.dataLoaded = true;
-      },
-      error : (ErrorData:object) => {
-        console.error(ErrorData)
       }
     });
   }
@@ -292,12 +351,19 @@ export class HomeComponent {
 
   Submit(Task_Data:any){
     if(Task_Data.valid){
-    this.SharedService.GenerateLabel(Task_Data.value.Descriiption).subscribe((data:any) => {
+    this.SharedService.GenerateLabel(Task_Data.value.Descriiption).subscribe((data:any) => 
+      {
       this.Task_form.get('Label')?.setValue(data.response);
-      this.Edit_Data == false ? this.SharedService.CreateData(Task_Data.value,'mdslds').subscribe(() =>  {this.Edit_Data = false}) : this.SharedService.EditData(Task_Data.value,'mdslds').subscribe(() => {this.Edit_Data = false})
-    })
-  }else{
-    console.log(Task_Data,Task_Data.valid,'lololol')
+      this.Edit_Data == false ? this.SharedService.CreateData(Task_Data.value,'mdslds').subscribe(() =>  
+        {this.Edit_Data = false}) : this.SharedService.EditData(Task_Data.value,'mdslds').subscribe(() => 
+            {
+              this.Edit_Data = false
+            })
+      });
+    
+  }
+  else{
+    console.error('Enter valid details')
   }
   }
 
@@ -340,4 +406,12 @@ export class HomeComponent {
   //     this.taskDate = new Date(this.tasks[index].CreatedOn);
   //     return this.datepipe.transform(new Date(this.taskDate.getTime() - this.Todaysdate.getTime()), 'HH:mm:ss') || new Date("00:00:00");
   //   }, 1000);
+  // }
+
+  // Function used to trigger dialog compoent to edit a task which i dont use now
+  // editemiter(Index: any) {
+  //   // To emit value and open dialog compoent with index value for editting purpose 
+  //   this.SharedService.emitValue([Index, true])
+  //   // To close dialog compoent
+  //   this.emittedValue = false;
   // }
